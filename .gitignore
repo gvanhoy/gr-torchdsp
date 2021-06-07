@@ -1,0 +1,8 @@
+.vscode/
+__pycache__
+build/
+*.fc32
+*.sc16
+*.pt
+*.pt16
+.devcontainer/
