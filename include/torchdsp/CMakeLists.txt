@@ -12,5 +12,6 @@
 install(FILES
     api.h
     fir_filter_ccc.h
-    add_cc.h DESTINATION include/torchdsp
+    add_cc.h
+    multiply_const_vcvc.h DESTINATION include/torchdsp
 )

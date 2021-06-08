@@ -27,8 +27,7 @@ fir_filter_ccc_impl::fir_filter_ccc_impl(const std::vector<gr_complex>& taps, un
     : gr::sync_block("fir_filter_ccc",
                      gr::io_signature::make(1, 1, sizeof(input_type)),
                      gr::io_signature::make(1, 1, sizeof(output_type))),
-      d_device_num(device_num),
-      d_device(::torch::cuda::is_available() ? ::torch::kCUDA : ::torch::kCPU, device_num)
+      d_device(torch::cuda::is_available() ? torch::kCUDA : torch::kCPU, device_num)
 {
     std::ostringstream msg;
     msg << "Running on device: " << d_device.type() << " Index: " << std::to_string(d_device.index()) << std::endl;

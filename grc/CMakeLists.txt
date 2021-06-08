@@ -8,5 +8,6 @@
 
 install(FILES
     torchdsp_fir_filter_ccc.block.yml
-    torchdsp_add_cc.block.yml DESTINATION share/gnuradio/grc/blocks
+    torchdsp_add_cc.block.yml
+    torchdsp_multiply_const_vcvc.block.yml DESTINATION share/gnuradio/grc/blocks
 )

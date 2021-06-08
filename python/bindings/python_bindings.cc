@@ -23,6 +23,7 @@ namespace py = pybind11;
 // BINDING_FUNCTION_PROTOTYPES(
 void bind_fir_filter_ccc(py::module& m);
     void bind_add_cc(py::module& m);
+    void bind_multiply_const_vcvc(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -53,5 +54,6 @@ PYBIND11_MODULE(torchdsp_python, m)
     // BINDING_FUNCTION_CALLS(
     bind_fir_filter_ccc(m);
     bind_add_cc(m);
+    bind_multiply_const_vcvc(m);
     // ) END BINDING_FUNCTION_CALLS
 }

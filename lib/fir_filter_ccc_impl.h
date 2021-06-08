@@ -20,7 +20,6 @@ private:
     torch::Tensor d_real_taps;
     torch::Tensor d_imag_taps;
     torch::Device d_device;
-    unsigned int d_device_num;
 
 public:
     fir_filter_ccc_impl(const std::vector<gr_complex>& taps, unsigned int device_num);
