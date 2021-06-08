@@ -48,7 +48,6 @@ int add_cc_impl::work(int noutput_items, gr_vector_const_void_star& input_items,
         input_type* in = reinterpret_cast<input_type*>(const_cast<void*>(input_items[input_idx]));
         auto input = torch::from_blob(reinterpret_cast<void*>(in), { noutput_items * 2 }, options);
         input.to(d_device);
-        input.apply();
         inputs.push_back(input);
     }
 
