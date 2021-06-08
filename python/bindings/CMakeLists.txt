@@ -29,7 +29,8 @@ include(GrPybind)
 ########################################################################
 
 list(APPEND torchdsp_python_files
-    fir_filter_ccc_python.cc python_bindings.cc)
+    fir_filter_ccc_python.cc
+    add_cc_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(torchdsp 
    ../..

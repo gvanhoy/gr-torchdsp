@@ -61,12 +61,12 @@ int fir_filter_ccc_impl::work(int noutput_items,
     input_type* in = reinterpret_cast<input_type*>(const_cast<void*>(input_items[0]));
     output_type* out = reinterpret_cast<output_type*>(output_items[0]);
 
-    auto options = torch::TensorOptions().dtype(::torch::kFloat32).requires_grad(false);
+    auto options = torch::TensorOptions().dtype(torch::kFloat32).requires_grad(false);
     auto conv_options = torch::nn::functional::Conv1dFuncOptions();
 
     // Interpret the in-buffer as a Tensor of type Float32 and transfer to the whatever device it needs to be on.
     auto input =
-        ::torch::from_blob(reinterpret_cast<void*>(in), { (noutput_items + d_real_taps.size(2) - 1) * 2 }, options);
+        torch::from_blob(reinterpret_cast<void*>(in), { (noutput_items + d_real_taps.size(2) - 1) * 2 }, options);
     input.to(d_device);
 
     auto real_input = input.index({ torch::indexing::Slice(0, torch::indexing::None, 2) }).reshape({ 1, 1, -1 });
