@@ -8,6 +8,7 @@
 
 from gnuradio import gr, gr_unittest, blocks
 import numpy as np
+import timeit
 
 # from gnuradio import blocks
 try:
@@ -31,8 +32,8 @@ class qa_fft_vcc(gr_unittest.TestCase):
         instance = fft_vcc(256, 0)
 
     def test_001_fft_sinusoid(self):
-        data = np.exp(1j*np.pi*np.linspace(0, 25600 - 1,
-                      25600, endpoint=True)/2.56).astype(np.complex64)
+        data = np.exp(1j*np.pi*np.linspace(0, 2560000 - 1,
+                      2560000, endpoint=True)/256).astype(np.complex64)
 
         source = blocks.vector_source_c(data, False, 256)
         fft_block = fft_vcc(256, 0)

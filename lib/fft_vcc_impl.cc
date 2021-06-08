@@ -47,16 +47,19 @@ int fft_vcc_impl::work(int noutput_items, gr_vector_const_void_star& input_items
     for (unsigned int idx = 0; idx < noutput_items; idx++) {
         // Interpret the in-buffer as a Tensor of type Float32 and transfer to the whatever device it needs to be on.
         auto input = torch::from_blob(reinterpret_cast<void*>(in), { d_fft_len }, options);
+        auto output = torch::from_blob(reinterpret_cast<void*>(out), { d_fft_len }, options);
         input.to(d_device);
 
         // Do the FFT
-        auto output = torch::fft::fft(input);
+        // auto output = torch::fft::fft(input);
+        // auto buffer = torch::zeros_like(input);
+        at::fft_fft_out(output, input);
 
         // Transfer data back to CPU
         output.to(torch::kCPU);
 
         // Copy to output
-        std::memcpy(out, output.contiguous().data_ptr(), sizeof(gr_complex) * d_fft_len);
+        // std::memcpy(out, output.contiguous().data_ptr(), sizeof(gr_complex) * d_fft_len);
 
         // Increment pointers.
         in += d_fft_len;
