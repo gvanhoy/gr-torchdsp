@@ -15,6 +15,7 @@ list(APPEND torchdsp_sources
     fir_filter_ccc_impl.cc
     add_cc_impl.cc
     multiply_const_vcvc_impl.cc
+    fft_vcc_impl.cc
 )
 
 set(torchdsp_sources "${torchdsp_sources}" PARENT_SCOPE)

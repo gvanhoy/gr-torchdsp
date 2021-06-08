@@ -19,6 +19,7 @@ class fir_filter_ccc_impl : public fir_filter_ccc
 private:
     torch::Tensor d_real_taps;
     torch::Tensor d_imag_taps;
+    torch::Tensor d_taps;
     torch::Device d_device;
 
 public:
