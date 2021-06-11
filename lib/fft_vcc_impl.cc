@@ -51,15 +51,10 @@ int fft_vcc_impl::work(int noutput_items, gr_vector_const_void_star& input_items
         input.to(d_device);
 
         // Do the FFT
-        // auto output = torch::fft::fft(input);
-        // auto buffer = torch::zeros_like(input);
         at::fft_fft_out(output, input);
 
         // Transfer data back to CPU
         output.to(torch::kCPU);
-
-        // Copy to output
-        // std::memcpy(out, output.contiguous().data_ptr(), sizeof(gr_complex) * d_fft_len);
 
         // Increment pointers.
         in += d_fft_len;
