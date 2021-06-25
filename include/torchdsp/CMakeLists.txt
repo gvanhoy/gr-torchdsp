@@ -14,5 +14,6 @@ install(FILES
     fir_filter_ccc.h
     add_cc.h
     multiply_const_vcvc.h
-    fft_vcc.h DESTINATION include/torchdsp
+    fft_vcc.h
+    torch_script_infer_classify_vcvi.h DESTINATION include/torchdsp
 )

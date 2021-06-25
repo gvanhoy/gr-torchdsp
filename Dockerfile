@@ -36,7 +36,7 @@ RUN mkdir /build && \
     make -j$(nproc) && \
     make install && \
     ldconfig && \
-    uhd_images_downloader && \
+    # uhd_images_downloader && \
     cd
 
 # Install Volk
@@ -62,10 +62,10 @@ RUN cd /build && \
 
 # Install libtorch
 RUN wget https://download.pytorch.org/libtorch/cu111/libtorch-cxx11-abi-shared-with-deps-1.8.1%2Bcu111.zip && \
-	unzip libtorch-cxx11-abi-shared-with-deps-1.8.1+cu111.zip -d / && \
-	cp -r /libtorch/* /usr/local && \
-	rm -rf /libtorch && \
-	ldconfig
+    unzip libtorch-cxx11-abi-shared-with-deps-1.8.1+cu111.zip -d / && \
+    cp -r /libtorch/* /usr/local && \
+    rm -rf /libtorch && \
+    ldconfig
 
 ENV PYTHONPATH="/usr/local/lib/python3/site-packages:/usr/local/lib/python3/dist-packages:/usr/local/lib/python3.8/site-packages:/usr/local/lib/python3.8/dist-packages:/usr/local/lib64/python3/site-packages:/usr/local/lib64/python3/dist-packages:/usr/local/lib64/python3.8/site-packages:/usr/local/lib64/python3.8/dist-packages:$PYTHONPATH"
 

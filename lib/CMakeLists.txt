@@ -16,6 +16,7 @@ list(APPEND torchdsp_sources
     add_cc_impl.cc
     multiply_const_vcvc_impl.cc
     fft_vcc_impl.cc
+    torch_script_infer_classify_vcvi_impl.cc
 )
 
 set(torchdsp_sources "${torchdsp_sources}" PARENT_SCOPE)

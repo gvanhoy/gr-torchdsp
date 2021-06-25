@@ -25,6 +25,7 @@ void bind_fir_filter_ccc(py::module& m);
     void bind_add_cc(py::module& m);
     void bind_multiply_const_vcvc(py::module& m);
     void bind_fft_vcc(py::module& m);
+    void bind_torch_script_infer_classify_vcvi(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -57,5 +58,6 @@ PYBIND11_MODULE(torchdsp_python, m)
     bind_add_cc(m);
     bind_multiply_const_vcvc(m);
     bind_fft_vcc(m);
+    bind_torch_script_infer_classify_vcvi(m);
     // ) END BINDING_FUNCTION_CALLS
 }

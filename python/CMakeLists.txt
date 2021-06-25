@@ -35,3 +35,4 @@ GR_ADD_TEST(qa_fir_filter_ccc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/q
 GR_ADD_TEST(qa_add_cc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_add_cc.py)
 GR_ADD_TEST(qa_multiply_const_vcvc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_multiply_const_vcvc.py)
 GR_ADD_TEST(qa_fft_vcc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_fft_vcc.py)
+GR_ADD_TEST(qa_torch_script_infer_classify_vcvi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_torch_script_infer_classify_vcvi.py)
