@@ -11,5 +11,6 @@ install(FILES
     torchdsp_add_cc.block.yml
     torchdsp_multiply_const_vcvc.block.yml
     torchdsp_fft_vcc.block.yml
-    torchdsp_torch_script_infer_classify_vcvi.block.yml DESTINATION share/gnuradio/grc/blocks
+    torchdsp_torch_script_infer_classify_vcvi.block.yml
+    torchdsp_torch_min_max_normalize_vcvc.block.yml DESTINATION share/gnuradio/grc/blocks
 )

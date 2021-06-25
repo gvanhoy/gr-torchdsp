@@ -1,5 +1,4 @@
 # RFML training script, patterned after https://github.com/radioML/examples/blob/master/modulation_recognition/RML2016.10a_VTCNN2_example.ipynb
-# Intended to train some simple models and export to ONNX to run through TensorRT
 # Dataset downloaded from here: http://opendata.deepsig.io/datasets/2016.10/RML2016.10a.tar.bz2
 
 from typing import Tuple, Optional

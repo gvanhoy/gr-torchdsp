@@ -1,3 +1,9 @@
 build/
 __pycache__/
 .devcontainer/
+*.pkl
+*.pt
+*.ckpt
+examples/lightning_logs/
+*.f32
+*.ipynb

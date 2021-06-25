@@ -80,7 +80,7 @@ int torch_script_infer_classify_vcvi_impl::work(
                       .to(torch::kInt32)
                       .to(torch::kCPU);
 
-    std::memcpy(out, result.contiguous().data_ptr(), d_batch_size);
+    std::memcpy(out, result.contiguous().data_ptr(), d_batch_size * sizeof(int));
 
     in += d_num_samples * d_batch_size;
     out += d_num_samples * d_batch_size;
