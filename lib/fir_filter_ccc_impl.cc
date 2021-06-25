@@ -27,9 +27,9 @@ fir_filter_ccc::sptr fir_filter_ccc::make(const std::vector<gr_complex> &taps,
 fir_filter_ccc_impl::fir_filter_ccc_impl(const std::vector<gr_complex> &taps,
                                          unsigned int downsample_rate,
                                          unsigned int device_num)
-    : gr::sync_decimator("fir_filter_ccc",
-                     gr::io_signature::make(1, 1, sizeof(input_type)),
-                     gr::io_signature::make(1, 1, sizeof(output_type)), downsample_rate),
+    : gr::sync_decimator(
+          "fir_filter_ccc", gr::io_signature::make(1, 1, sizeof(input_type)),
+          gr::io_signature::make(1, 1, sizeof(output_type)), downsample_rate),
       d_downsample_rate(downsample_rate),
       d_device(torch::cuda::is_available() ? torch::kCUDA : torch::kCPU,
                device_num) {
@@ -55,7 +55,7 @@ fir_filter_ccc_impl::fir_filter_ccc_impl(const std::vector<gr_complex> &taps,
 
   set_history(taps.size());
 
-    d_conv_options =
+  d_conv_options =
       torch::nn::functional::Conv1dFuncOptions().stride(d_downsample_rate);
 }
 
@@ -74,12 +74,12 @@ int fir_filter_ccc_impl::work(int noutput_items,
   auto options =
       torch::TensorOptions().dtype(torch::kFloat32).requires_grad(false);
 
-
   // Interpret the in-buffer as a Tensor of type Float32 and transfer to the
   // whatever device it needs to be on.
-  auto input = torch::from_blob(reinterpret_cast<void *>(in),
-                                {(noutput_items*d_downsample_rate + d_real_taps.size(2) - 1) * 2},
-                                options);
+  auto input = torch::from_blob(
+      reinterpret_cast<void *>(in),
+      {(noutput_items * d_downsample_rate + d_real_taps.size(2) - 1) * 2},
+      options);
   input.to(d_device);
 
   auto real_input =
