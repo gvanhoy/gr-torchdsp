@@ -16,5 +16,6 @@ install(FILES
     multiply_const_vcvc.h
     fft_vcc.h
     torch_script_infer_classify_vcvi.h
-    torch_min_max_normalize_vcvc.h DESTINATION include/torchdsp
+    torch_min_max_normalize_vcvc.h
+    zcu216_source.h DESTINATION include/torchdsp
 )

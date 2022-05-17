@@ -49,15 +49,13 @@ int fft_vcc_impl::work(int noutput_items,
     // whatever device it needs to be on.
     auto input =
         torch::from_blob(reinterpret_cast<void *>(in), {d_fft_len}, options);
-    auto output =
-        torch::from_blob(reinterpret_cast<void *>(out), {d_fft_len}, options);
     input.to(d_device);
 
-    // Do the FFT
-    at::fft_fft_out(output, input);
+    // Do the FFT and copy out to CPU
+    auto result = torch::fft::fftshift(torch::fft::fft(input)).to(torch::kCPU);
 
-    // Transfer data back to CPU
-    output.to(torch::kCPU);
+    // Copy result tensor to output buffer
+    std::memcpy(out, result.contiguous().data_ptr(), d_fft_len * sizeof(gr_complex));
 
     // Increment pointers.
     in += d_fft_len;

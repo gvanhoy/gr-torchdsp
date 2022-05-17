@@ -7,3 +7,4 @@ __pycache__/
 examples/lightning_logs/
 *.f32
 *.ipynb
+.vscode/

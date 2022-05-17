@@ -18,6 +18,7 @@ list(APPEND torchdsp_sources
     fft_vcc_impl.cc
     torch_script_infer_classify_vcvi_impl.cc
     torch_min_max_normalize_vcvc_impl.cc
+    zcu216_source_impl.cc
 )
 
 set(torchdsp_sources "${torchdsp_sources}" PARENT_SCOPE)

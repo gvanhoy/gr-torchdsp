@@ -34,7 +34,8 @@ list(APPEND torchdsp_python_files
     multiply_const_vcvc_python.cc
     fft_vcc_python.cc
     torch_script_infer_classify_vcvi_python.cc
-    torch_min_max_normalize_vcvc_python.cc python_bindings.cc)
+    torch_min_max_normalize_vcvc_python.cc
+    zcu216_source_python.cc python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(torchdsp 
    ../..

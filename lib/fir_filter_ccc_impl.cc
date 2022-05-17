@@ -35,7 +35,7 @@ fir_filter_ccc_impl::fir_filter_ccc_impl(const std::vector<gr_complex> &taps,
                device_num) {
   std::ostringstream msg;
   msg << "Running on device: " << d_device.type()
-      << " Index: " << std::to_string(d_device.index()) << std::endl;
+      << " Index: " << std::to_string(d_device.index()) << std::endl;  
   GR_LOG_INFO(d_debug_logger, msg.str());
 
   auto tap_options = torch::TensorOptions()
@@ -80,7 +80,7 @@ int fir_filter_ccc_impl::work(int noutput_items,
       reinterpret_cast<void *>(in),
       {(noutput_items * d_downsample_rate + d_real_taps.size(2) - 1) * 2},
       options);
-  input.to(d_device);
+  input = input.to(d_device);
 
   auto real_input =
       input.index({torch::indexing::Slice(0, torch::indexing::None, 2)})
