@@ -19,6 +19,8 @@ list(APPEND torchdsp_sources
     torch_script_infer_classify_vcvi_impl.cc
     torch_min_max_normalize_vcvc_impl.cc
     zcu216_source_impl.cc
+    triton_inference_impl.cc
+    shm_utils.cc
 )
 
 set(torchdsp_sources "${torchdsp_sources}" PARENT_SCOPE)
@@ -28,7 +30,7 @@ if(NOT torchdsp_sources)
 endif(NOT torchdsp_sources)
 
 add_library(gnuradio-torchdsp SHARED ${torchdsp_sources})
-target_link_libraries(gnuradio-torchdsp gnuradio::gnuradio-runtime "${TORCH_LIBRARIES}")
+target_link_libraries(gnuradio-torchdsp gnuradio::gnuradio-runtime "${TORCH_LIBRARIES}" TritonClient::httpclient)
 target_include_directories(gnuradio-torchdsp
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     PUBLIC $<INSTALL_INTERFACE:include>

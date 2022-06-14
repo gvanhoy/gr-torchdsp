@@ -6,15 +6,6 @@ templates:
   imports: import torchdsp
   make: torchdsp.zcu216_source()
 
-# parameters:
-# - id: parametername_replace_me
-#   label: FIX ME:
-#   dtype: string
-#   default: You need to fill in your grc/torchdsp_zcu216_source.block.yaml
-#- id: ...
-#  label: ...
-#  dtype: ...
-
 outputs:
 - label: out
   domain: stream

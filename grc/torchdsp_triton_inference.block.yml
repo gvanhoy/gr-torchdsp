@@ -1,0 +1,48 @@
+id: torchdsp_triton_inference
+label: Triton Inference
+category: '[torchdsp]'
+
+templates:
+  imports: import torchdsp; import numpy as np
+  make: torchdsp.triton_inference(${triton_url}, ${model_name}, ${input_shape}, ${output_shape})
+
+parameters:
+- id: triton_url
+  label: Triton URL
+  dtype: string
+  default: my_model
+- id: model_name
+  label: Model Name
+  dtype: string
+  default: my_model
+- id: input_shape
+  label: Input Shape
+  dtype: int_vector
+  default: (1,1)
+- id: input_vlen
+  label: Number of Input Elements 
+  dtype: int
+  default: np.prod(input_shape)
+- id: output_shape
+  label: Output Shape
+  dtype: int_vector
+  default: (1, 1)
+- id: output_vlen
+  label: Number of Output Elements 
+  dtype: int
+  default: np.prod(input_shape)
+
+
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+  vlen: ${ input_vlen }
+
+outputs:
+- label: out
+  domain: stream
+  dtype: complex
+  vlen: ${ output_vlen }
+
+file_format: 1

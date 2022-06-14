@@ -74,7 +74,7 @@ ENDIF()
 # Install directories
 ########################################################################
 include(FindPkgConfig)
-find_package(Gnuradio "3.9" REQUIRED)
+find_package(Gnuradio "3.9" REQUIRED COMPONENTS runtime)
 include(GrVersion)
 
 include(GrPlatform) #define LIB_SUFFIX
@@ -115,6 +115,9 @@ endif(APPLE)
 ########################################################################
 find_package(Doxygen)
 find_package(Torch REQUIRED)
+find_package(CURL REQUIRED)
+find_package(TritonCommon CONFIG REQUIRED)
+find_package(TritonClient CONFIG REQUIRED)
 
 ########################################################################
 # PyBind11 Related

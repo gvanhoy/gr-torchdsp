@@ -17,5 +17,7 @@ install(FILES
     fft_vcc.h
     torch_script_infer_classify_vcvi.h
     torch_min_max_normalize_vcvc.h
-    zcu216_source.h DESTINATION include/torchdsp
+    zcu216_source.h
+    triton_inference.h
+    DESTINATION include/torchdsp
 )

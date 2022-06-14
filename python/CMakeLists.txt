@@ -37,3 +37,4 @@ GR_ADD_TEST(qa_multiply_const_vcvc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_D
 GR_ADD_TEST(qa_fft_vcc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_fft_vcc.py)
 GR_ADD_TEST(qa_torch_script_infer_classify_vcvi ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_torch_script_infer_classify_vcvi.py)
 GR_ADD_TEST(qa_torch_min_max_normalize_vcvc ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_torch_min_max_normalize_vcvc.py)
+GR_ADD_TEST(qa_triton_inference ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/qa_triton_inference.py)
