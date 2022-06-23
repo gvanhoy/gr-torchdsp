@@ -19,5 +19,5 @@ install(FILES
     torch_min_max_normalize_vcvc.h
     zcu216_source.h
     triton_inference.h
-    DESTINATION include/torchdsp
+    triton_model.h DESTINATION include/torchdsp
 )

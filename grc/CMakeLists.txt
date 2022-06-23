@@ -5,10 +5,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
-
 install(FILES
     torchdsp_fir_filter_ccc.block.yml
     torchdsp_add_cc.block.yml
+    torchdsp_add_ff.block.yml
     torchdsp_multiply_const_vcvc.block.yml
     torchdsp_fft_vcc.block.yml
     torchdsp_torch_script_infer_classify_vcvi.block.yml

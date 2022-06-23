@@ -10,11 +10,11 @@ parameters:
 - id: device_num
   label: "CUDA Device #"
   dtype: int
-  value: 0
+  default: 0
 - id: fft_len
   label: "FFT Length"
   dtype: int
-  value: 512
+  default: 512
 
 inputs:
 - label: in0

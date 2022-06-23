@@ -10,19 +10,19 @@ parameters:
 - id: triton_url
   label: Triton URL
   dtype: string
-  default: my_model
+  default: 'localhost:8000'
 - id: model_name
   label: Model Name
   dtype: string
-  default: my_model
+  default: 'simple'
 - id: input_shape
   label: Input Shape
   dtype: int_vector
-  default: (1,1)
+  default: (1, 16)
 - id: input_vlen
   label: Number of Input Elements 
   dtype: int
-  default: np.prod(input_shape)
+  default: 2
 - id: output_shape
   label: Output Shape
   dtype: int_vector
@@ -30,7 +30,7 @@ parameters:
 - id: output_vlen
   label: Number of Output Elements 
   dtype: int
-  default: np.prod(input_shape)
+  default: (1, 16)
 
 
 inputs:

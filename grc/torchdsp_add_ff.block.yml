@@ -1,0 +1,32 @@
+id: torchdsp_triton_model
+label: Triton Add
+category: '[torchdsp]'
+
+templates:
+  imports: import torchdsp
+  make: torchdsp.triton_inference(${model_name}, ${triton_url})
+
+parameters:
+- id: triton_url
+  label: "Triton URL"
+  dtype: string
+  default: "localhost:8000"
+- id: model_name
+  label: "Model Name"
+  dtype: string
+  default: "add"
+  hide: all
+
+inputs:
+- label: in0
+  domain: stream
+  dtype: float
+  vlen: 16
+
+outputs:
+- label: out0
+  domain: stream
+  dtype: float
+  vlen: 16
+
+file_format: 1

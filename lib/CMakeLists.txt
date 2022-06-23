@@ -6,10 +6,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-########################################################################
+# #######################################################################
 # Setup library
-########################################################################
-include(GrPlatform) #define LIB_SUFFIX
+# #######################################################################
+include(GrPlatform) # define LIB_SUFFIX
 
 list(APPEND torchdsp_sources
     fir_filter_ccc_impl.cc
@@ -21,20 +21,22 @@ list(APPEND torchdsp_sources
     zcu216_source_impl.cc
     triton_inference_impl.cc
     shm_utils.cc
+    triton_model_impl.cc
 )
 
 set(torchdsp_sources "${torchdsp_sources}" PARENT_SCOPE)
+
 if(NOT torchdsp_sources)
     MESSAGE(STATUS "No C++ sources... skipping lib/")
     return()
 endif(NOT torchdsp_sources)
 
 add_library(gnuradio-torchdsp SHARED ${torchdsp_sources})
-target_link_libraries(gnuradio-torchdsp gnuradio::gnuradio-runtime "${TORCH_LIBRARIES}" TritonClient::httpclient)
+target_link_libraries(gnuradio-torchdsp gnuradio::gnuradio-runtime "${TORCH_LIBRARIES}" TritonClient::httpclient "${RapidJSON_LIBRARIES}")
 target_include_directories(gnuradio-torchdsp
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     PUBLIC $<INSTALL_INTERFACE:include>
-  )
+)
 set_target_properties(gnuradio-torchdsp PROPERTIES DEFINE_SYMBOL "gnuradio_torchdsp_EXPORTS")
 
 if(APPLE)
@@ -43,28 +45,29 @@ if(APPLE)
     )
 endif(APPLE)
 
-########################################################################
+# #######################################################################
 # Install built library files
-########################################################################
+# #######################################################################
 include(GrMiscUtils)
 GR_LIBRARY_FOO(gnuradio-torchdsp)
 
-########################################################################
+# #######################################################################
 # Print summary
-########################################################################
+# #######################################################################
 message(STATUS "Using install prefix: ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Building for version: ${VERSION} / ${LIBVER}")
 
-########################################################################
+# #######################################################################
 # Build and register unit test
-########################################################################
+# #######################################################################
 include(GrTest)
 
 # If your unit tests require special include paths, add them here
-#include_directories()
+# include_directories()
 # List all files that contain Boost.UTF unit tests here
 list(APPEND test_torchdsp_sources
 )
+
 # Anything we need to link to for the unit tests go here
 list(APPEND GR_TEST_TARGET_DEPS gnuradio-torchdsp)
 

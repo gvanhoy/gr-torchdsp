@@ -29,6 +29,7 @@ void bind_torch_script_infer_classify_vcvi(py::module& m);
 void bind_torch_min_max_normalize_vcvc(py::module& m);
 void bind_zcu216_source(py::module& m);
 void bind_triton_inference(py::module& m);
+void bind_triton_model(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -65,5 +66,6 @@ PYBIND11_MODULE(torchdsp_python, m)
     bind_torch_min_max_normalize_vcvc(m);
     bind_zcu216_source(m);
     bind_triton_inference(m);
+    bind_triton_model(m);
     // ) END BINDING_FUNCTION_CALLS
 }

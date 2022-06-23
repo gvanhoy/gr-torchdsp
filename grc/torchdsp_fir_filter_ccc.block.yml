@@ -10,11 +10,11 @@ parameters:
 - id: device_num
   label: "CUDA Device #"
   dtype: int
-  value: 0
+  default: 0
 - id: decim_rate
   label: Decimation Rate
   dtype: int
-  value: 1
+  default: 1
 - id: taps
   label: "Taps"
   dtype: complex_vector

@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(triton_inference.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(2897c129bae73e57afd273340596acc2)                     */
+/* BINDTOOL_HEADER_FILE_HASH(bb13e82adbad95e8f671736c94571c8d)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -37,10 +37,8 @@ void bind_triton_inference(py::module& m)
         std::shared_ptr<triton_inference>>(m, "triton_inference", D(triton_inference))
 
         .def(py::init(&triton_inference::make),
-           py::arg("triton_url"),
            py::arg("model_name"),
-           py::arg("input_shape"),
-           py::arg("output_shape"),
+           py::arg("triton_url") = "localhost:8000",
            D(triton_inference,make)
         )
         

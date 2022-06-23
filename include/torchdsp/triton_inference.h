@@ -32,10 +32,8 @@ public:
      * class. torchdsp::triton_inference::make is the public interface for
      * creating new instances.
      */
-    static sptr make(std::string triton_url,
-                     std::string model_name,
-                     const std::vector<int64_t>& input_shape,
-                     const std::vector<int64_t>& output_shape);
+    static sptr
+    make(const std::string& model_name, const std::string& triton_url = "localhost:8000");
 };
 
 } // namespace torchdsp
