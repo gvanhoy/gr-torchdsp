@@ -1,5 +1,5 @@
-id: torchdsp_triton_add_ff
-label: Triton Add
+id: torchdsp_triton_fft_vfvc
+label: Triton FFT
 category: '[torchdsp]'
 
 templates:
@@ -15,18 +15,22 @@ parameters:
   label: "Device"
   dtype: enum
   options: [cpu, gpu]
-  default: "cpu"
+  default: 'cpu'
 
 inputs:
 - label: in0
   domain: stream
   dtype: float
-  vlen: 16
+  vlen: 512
+- label: in1
+  domain: stream
+  dtype: float
+  vlen: 512
 
 outputs:
 - label: out0
   domain: stream
   dtype: float
-  vlen: 16
+  vlen: 1024
 
 file_format: 1

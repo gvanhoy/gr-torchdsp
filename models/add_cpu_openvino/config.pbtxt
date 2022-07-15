@@ -1,0 +1,30 @@
+name: "add_cpu_openvino"
+backend: "pytorch"
+input [
+  {
+    name: "input__0"
+    data_type: TYPE_FP32
+    dims: [ 1, 16 ]
+  }
+]
+output [
+  {
+    name: "output__0"
+    data_type: TYPE_FP32
+    dims: [ 1, 16 ]
+  }
+]
+
+optimization { execution_accelerators {
+  cpu_execution_accelerator : [ {
+    name : "openvino"
+  }]
+}}
+
+
+instance_group [
+	{
+		count: 1
+		kind: KIND_CPU
+	}
+]

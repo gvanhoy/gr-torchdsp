@@ -9,16 +9,16 @@
 from gnuradio import gr, gr_unittest
 # from gnuradio import blocks
 try:
-    from torchdsp import triton_inference
+    from torchdsp import triton_block
 except ImportError:
     import os
     import sys
     dirname, filename = os.path.split(os.path.abspath(__file__))
     sys.path.append(os.path.join(dirname, "bindings"))
-    from torchdsp import triton_inference
+    from torchdsp import triton_block
 
 
-class qa_triton_inference(gr_unittest.TestCase):
+class qa_triton_block(gr_unittest.TestCase):
 
     def setUp(self):
         self.tb = gr.top_block()
@@ -27,8 +27,8 @@ class qa_triton_inference(gr_unittest.TestCase):
         self.tb = None
 
     def test_instance(self):
-        instance = triton_inference("http://localhost:8001")
+        instance = triton_block("http://localhost:8001")
 
 
 if __name__ == '__main__':
-    gr_unittest.run(qa_triton_inference)
+    gr_unittest.run(qa_triton_block)

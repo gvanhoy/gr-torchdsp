@@ -5,28 +5,28 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-########################################################################
+# #######################################################################
 # Check if there is C++ code at all
-########################################################################
+# #######################################################################
 if(NOT torchdsp_sources)
     MESSAGE(STATUS "No C++ sources... skipping python bindings")
     return()
 endif(NOT torchdsp_sources)
 
-########################################################################
+# #######################################################################
 # Check for pygccxml
-########################################################################
+# #######################################################################
 GR_PYTHON_CHECK_MODULE_RAW(
     "pygccxml"
     "import pygccxml"
     PYGCCXML_FOUND
-    )
+)
 
 include(GrPybind)
 
-########################################################################
+# #######################################################################
 # Python Bindings
-########################################################################
+# #######################################################################
 list(APPEND torchdsp_python_files
     fir_filter_ccc_python.cc
     add_cc_python.cc
@@ -34,13 +34,12 @@ list(APPEND torchdsp_python_files
     fft_vcc_python.cc
     torch_script_infer_classify_vcvi_python.cc
     torch_min_max_normalize_vcvc_python.cc
-    zcu216_source_python.cc
-    triton_inference_python.cc
+    triton_block_python.cc
     triton_model_python.cc python_bindings.cc)
 
-GR_PYBIND_MAKE_OOT(torchdsp 
-   ../..
-   gr::torchdsp
-   "${torchdsp_python_files}")
+GR_PYBIND_MAKE_OOT(torchdsp
+    ../..
+    gr::torchdsp
+    "${torchdsp_python_files}")
 
 install(TARGETS torchdsp_python DESTINATION ${GR_PYTHON_DIR}/torchdsp COMPONENT pythonapi)

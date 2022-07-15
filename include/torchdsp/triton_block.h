@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#ifndef INCLUDED_TORCHDSP_TRITON_INFERENCE_H
-#define INCLUDED_TORCHDSP_TRITON_INFERENCE_H
+#ifndef INCLUDED_TORCHDSP_TRITON_BLOCK_H
+#define INCLUDED_TORCHDSP_TRITON_BLOCK_H
 
 #include <gnuradio/sync_block.h>
 #include <torchdsp/api.h>
@@ -19,17 +19,17 @@ namespace torchdsp {
  * \ingroup torchdsp
  *
  */
-class TORCHDSP_API triton_inference : virtual public gr::sync_block
+class TORCHDSP_API triton_block : virtual public gr::sync_block
 {
 public:
-    typedef std::shared_ptr<triton_inference> sptr;
+    typedef std::shared_ptr<triton_block> sptr;
 
     /*!
-     * \brief Return a shared_ptr to a new instance of torchdsp::triton_inference.
+     * \brief Return a shared_ptr to a new instance of torchdsp::triton_block.
      *
-     * To avoid accidental use of raw pointers, torchdsp::triton_inference's
+     * To avoid accidental use of raw pointers, torchdsp::triton_block's
      * constructor is in a private implementation
-     * class. torchdsp::triton_inference::make is the public interface for
+     * class. torchdsp::triton_block::make is the public interface for
      * creating new instances.
      */
     static sptr
@@ -39,4 +39,4 @@ public:
 } // namespace torchdsp
 } // namespace gr
 
-#endif /* INCLUDED_TORCHDSP_TRITON_INFERENCE_H */
+#endif /* INCLUDED_TORCHDSP_TRITON_BLOCK_H */

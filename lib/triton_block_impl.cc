@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#include "triton_inference_impl.h"
+#include "triton_block_impl.h"
 #include <gnuradio/io_signature.h>
 
 namespace gr {
@@ -14,29 +14,39 @@ namespace torchdsp {
 using input_type = gr_complex;
 using output_type = gr_complex;
 
-triton_inference::sptr
-triton_inference::make(const std::string& model_name, const std::string& triton_url) {
+triton_block::sptr
+triton_block::make(const std::string& model_name, const std::string& triton_url) {
     auto model = triton_model::make(model_name, triton_url);
-    return gnuradio::make_block_sptr<triton_inference_impl>(model);
+    // set_output_multiple(//twice the intended buffer size from model);
+    return gnuradio::make_block_sptr<triton_block_impl>(model);
 }
 
 /*
  * The private constructor
  */
-triton_inference_impl::triton_inference_impl(std::unique_ptr<triton_model>& model)
+triton_block_impl::triton_block_impl(std::unique_ptr<triton_model>& model)
     : gr::sync_block(
-          "triton_inference",
+          "triton_block",
           gr::io_signature::makev(1, -1, model.get()->get_input_sizes()),
           gr::io_signature::makev(1, -1, model.get()->get_output_sizes())),
       model_(std::move(model)) // this is invoked after calling sync_block constructor.
-{}
+{
+    // model_->set_output_memory_name();
+    set_output_multiple(2); // This might give you a ping-pong buffer functionality
+}
+
+bool triton_block_impl::start() {
+    // This runs before the first work()
+
+    return sync_block::start();
+}
 
 /*
  * Our virtual destructor.
  */
-triton_inference_impl::~triton_inference_impl() {}
+triton_block_impl::~triton_block_impl() {}
 
-int triton_inference_impl::work(
+int triton_block_impl::work(
     int noutput_items,
     gr_vector_const_void_star& input_items,
     gr_vector_void_star& output_items) {

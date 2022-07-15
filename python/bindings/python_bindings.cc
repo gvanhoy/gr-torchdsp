@@ -27,8 +27,7 @@ void bind_multiply_const_vcvc(py::module& m);
 void bind_fft_vcc(py::module& m);
 void bind_torch_script_infer_classify_vcvi(py::module& m);
 void bind_torch_min_max_normalize_vcvc(py::module& m);
-void bind_zcu216_source(py::module& m);
-void bind_triton_inference(py::module& m);
+void bind_triton_block(py::module& m);
 void bind_triton_model(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
@@ -37,14 +36,12 @@ void bind_triton_model(py::module& m);
 // for newer Python versions.
 // This function is also necessary because it ensures access to the C API
 // and removes a warning.
-void* init_numpy()
-{
+void* init_numpy() {
     import_array();
     return NULL;
 }
 
-PYBIND11_MODULE(torchdsp_python, m)
-{
+PYBIND11_MODULE(torchdsp_python, m) {
     // Initialize the numpy C API
     // (otherwise we will see segmentation faults)
     init_numpy();
@@ -64,8 +61,7 @@ PYBIND11_MODULE(torchdsp_python, m)
     bind_fft_vcc(m);
     bind_torch_script_infer_classify_vcvi(m);
     bind_torch_min_max_normalize_vcvc(m);
-    bind_zcu216_source(m);
-    bind_triton_inference(m);
+    bind_triton_block(m);
     bind_triton_model(m);
     // ) END BINDING_FUNCTION_CALLS
 }

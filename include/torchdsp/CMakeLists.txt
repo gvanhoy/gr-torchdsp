@@ -6,9 +6,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-########################################################################
+# #######################################################################
 # Install public header files
-########################################################################
+# #######################################################################
 install(FILES
     api.h
     fir_filter_ccc.h
@@ -17,7 +17,6 @@ install(FILES
     fft_vcc.h
     torch_script_infer_classify_vcvi.h
     torch_min_max_normalize_vcvc.h
-    zcu216_source.h
-    triton_inference.h
+    triton_block.h
     triton_model.h DESTINATION include/torchdsp
 )

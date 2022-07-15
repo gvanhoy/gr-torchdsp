@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(zcu216_source.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(8cc4701efc5d7248a1cd59d61b8bbf1d)                     */
+/* BINDTOOL_HEADER_FILE(triton_block.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(255c0932fddd2e654689aa7b61c2044f)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,21 +23,23 @@
 
 namespace py = pybind11;
 
-#include <torchdsp/zcu216_source.h>
+#include <torchdsp/triton_block.h>
 // pydoc.h is automatically generated in the build directory
-#include <zcu216_source_pydoc.h>
+#include <triton_block_pydoc.h>
 
-void bind_zcu216_source(py::module& m)
+void bind_triton_block(py::module& m)
 {
 
-    using zcu216_source    = ::gr::torchdsp::zcu216_source;
+    using triton_block    = ::gr::torchdsp::triton_block;
 
 
-    py::class_<zcu216_source, gr::sync_block, gr::block, gr::basic_block,
-        std::shared_ptr<zcu216_source>>(m, "zcu216_source", D(zcu216_source))
+    py::class_<triton_block, gr::sync_block, gr::block, gr::basic_block,
+        std::shared_ptr<triton_block>>(m, "triton_block", D(triton_block))
 
-        .def(py::init(&zcu216_source::make),
-           D(zcu216_source,make)
+        .def(py::init(&triton_block::make),
+           py::arg("model_name"),
+           py::arg("triton_url") = "localhost:8000",
+           D(triton_block,make)
         )
         
 

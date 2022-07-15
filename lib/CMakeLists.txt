@@ -10,7 +10,6 @@
 # Setup library
 # #######################################################################
 include(GrPlatform) # define LIB_SUFFIX
-
 list(APPEND torchdsp_sources
     fir_filter_ccc_impl.cc
     add_cc_impl.cc
@@ -18,8 +17,7 @@ list(APPEND torchdsp_sources
     fft_vcc_impl.cc
     torch_script_infer_classify_vcvi_impl.cc
     torch_min_max_normalize_vcvc_impl.cc
-    zcu216_source_impl.cc
-    triton_inference_impl.cc
+    triton_block_impl.cc
     shm_utils.cc
     triton_model_impl.cc
 )

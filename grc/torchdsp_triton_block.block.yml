@@ -1,10 +1,10 @@
-id: torchdsp_triton_inference
+id: torchdsp_triton_block
 label: Triton Inference
 category: '[torchdsp]'
 
 templates:
   imports: import torchdsp; import numpy as np
-  make: torchdsp.triton_inference(${triton_url}, ${model_name}, ${input_shape}, ${output_shape})
+  make: torchdsp.triton_block(${triton_url}, ${model_name}, ${input_shape}, ${output_shape})
 
 parameters:
 - id: triton_url

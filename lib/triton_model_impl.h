@@ -45,8 +45,11 @@ private:
 
 public:
     triton_model_impl(const std::string& model_name, const std::string& triton_url);
-    // triton_model_impl(triton_model_impl&& other);
-    // triton_model_impl& operator=(triton_model_impl&& other);
+
+    // We override these to prevent memory leaks.
+    triton_model_impl(triton_model_impl&& other);
+    triton_model_impl& operator=(triton_model_impl&& other);
+
     ~triton_model_impl();
 
     // Interface to GNU Radio Block
@@ -89,7 +92,7 @@ public:
     static std::vector<int64_t> parse_io_shape(const rapidjson::Value& io_metadata) {
         std::vector<int64_t> shape;
         for (auto& dimension : io_metadata["shape"].GetArray())
-            shape.push_back(dimension.GetInt64());
+            shape.push_back(std::abs(dimension.GetInt64()));
 
         return shape;
     };
@@ -103,7 +106,7 @@ public:
     // Configuring IO
     static int64_t itemsize(const std::string& data_type);
     static int64_t num_elements(const std::vector<int64_t>& shape);
-    io_memory_t allocate_shm(const io_metadata_t& io_meta);
+    static io_memory_t allocate_shm(const io_metadata_t& io_meta);
 };
 
 } // namespace torchdsp

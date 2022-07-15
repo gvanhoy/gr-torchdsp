@@ -22,39 +22,49 @@ triton_model::make(const std::string& model_name, const std::string& triton_url)
     return std::make_unique<triton_model_impl>(model_name, triton_url);
 }
 
-// triton_model_impl::triton_model_impl(triton_model_impl&& other)
-//     : client_(std::move(other.client_)), options_(other.model_name_) {
+/**
+ * @brief Move constructor. We use this to prevent memory leaks.
+ *
+ * @param other
+ */
+triton_model_impl::triton_model_impl(triton_model_impl&& other)
+    : client_(std::move(other.client_)), options_(other.model_name_) {
 
-//     std::cout << "Move constructor called" << std::endl;
-//     for (const auto& input_ptr : other.input_ptrs_)
-//         input_ptrs_.push_back(std::move(input_ptr));
+    for (const auto& input_ptr : other.input_ptrs_)
+        input_ptrs_.push_back(std::move(input_ptr));
 
-//     for (const auto& output_ptr : other.output_ptrs_)
-//         output_ptrs_.push_back(std::move(output_ptr));
+    for (const auto& output_ptr : other.output_ptrs_)
+        output_ptrs_.push_back(std::move(output_ptr));
 
-//     model_name_ = other.model_name_;
-//     inputs_ = other.inputs_;
-//     outputs_ = other.outputs_;
-//     results_ = other.results_;
-// }
+    model_name_ = other.model_name_;
+    inputs_ = other.inputs_;
+    outputs_ = other.outputs_;
+    results_ = other.results_;
+}
 
-// triton_model_impl& triton_model_impl::operator=(triton_model_impl&& other) {
-//     client_ = std::move(other.client_);
-//     options_.model_name_ = other.model_name_;
+/**
+ * @brief Move assignment operator. We use this to prevent memory leaks.
+ *
+ * @param other
+ * @return triton_model_impl&
+ */
+triton_model_impl& triton_model_impl::operator=(triton_model_impl&& other) {
+    client_ = std::move(other.client_);
+    options_.model_name_ = other.model_name_;
 
-//     std::cout << "Move constructor called" << std::endl;
-//     for (const auto& input_ptr : other.input_ptrs_)
-//         input_ptrs_.push_back(std::move(input_ptr));
+    std::cout << "Move constructor called" << std::endl;
+    for (const auto& input_ptr : other.input_ptrs_)
+        input_ptrs_.push_back(std::move(input_ptr));
 
-//     for (const auto& output_ptr : other.output_ptrs_)
-//         output_ptrs_.push_back(std::move(output_ptr));
+    for (const auto& output_ptr : other.output_ptrs_)
+        output_ptrs_.push_back(std::move(output_ptr));
 
-//     model_name_ = other.model_name_;
-//     inputs_ = other.inputs_;
-//     outputs_ = other.outputs_;
-//     results_ = other.results_;
-//     return *this;
-// }
+    model_name_ = other.model_name_;
+    inputs_ = other.inputs_;
+    outputs_ = other.outputs_;
+    results_ = other.results_;
+    return *this;
+}
 
 /**
  * @brief Construct a new triton model impl::triton model impl object
@@ -105,14 +115,14 @@ triton_model_impl::triton_model_impl(
 
     // std::cout << "Got " << this->get_num_inputs() << " inputs." << std::endl;
     // std::cout << "Got " << this->get_num_outputs() << " outputs." << std::endl;
-    // std::cout << "Got ";
+    // std::cout << "Got [";
     // for (const auto& dim : this->get_input_sizes())
-    //     std::cout << "[" << dim << ", ";
+    //     std::cout << dim << ", ";
     // std::cout << "] for input sizes." << std::endl;
 
-    // std::cout << "Got ";
+    // std::cout << "Got [";
     // for (const auto& dim : this->get_output_sizes())
-    //     std::cout << "[" << dim << ", ";
+    //     std::cout << dim << ", ";
     // std::cout << "] for output sizes." << std::endl;
 
     options_.model_version_ = "";

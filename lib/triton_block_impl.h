@@ -5,12 +5,12 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-#ifndef INCLUDED_TORCHDSP_TRITON_INFERENCE_IMPL_H
-#define INCLUDED_TORCHDSP_TRITON_INFERENCE_IMPL_H
+#ifndef INCLUDED_TORCHDSP_TRITON_BLOCK_IMPL_H
+#define INCLUDED_TORCHDSP_TRITON_BLOCK_IMPL_H
 
 #include "shm_utils.h"
 #include <http_client.h>
-#include <torchdsp/triton_inference.h>
+#include <torchdsp/triton_block.h>
 #include <torchdsp/triton_model.h>
 
 namespace tc = triton::client;
@@ -19,14 +19,15 @@ namespace tc = triton::client;
 namespace gr {
 namespace torchdsp {
 
-class triton_inference_impl : public triton_inference
+class triton_block_impl : public triton_block
 {
 private:
     std::unique_ptr<triton_model> model_;
 
 public:
-    triton_inference_impl(std::unique_ptr<triton_model>& model);
-    ~triton_inference_impl();
+    triton_block_impl(std::unique_ptr<triton_model>& model);
+    ~triton_block_impl();
+    bool start();
 
     // Where all the action really happens
     int work(
@@ -38,4 +39,4 @@ public:
 } // namespace torchdsp
 } // namespace gr
 
-#endif /* INCLUDED_TORCHDSP_TRITON_INFERENCE_IMPL_H */
+#endif /* INCLUDED_TORCHDSP_TRITON_BLOCK_IMPL_H */

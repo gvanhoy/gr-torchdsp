@@ -16,12 +16,12 @@
 
 
  
- static const char *__doc_gr_torchdsp_zcu216_source = R"doc()doc";
+ static const char *__doc_gr_torchdsp_triton_block = R"doc()doc";
 
 
- static const char *__doc_gr_torchdsp_zcu216_source_zcu216_source = R"doc()doc";
+ static const char *__doc_gr_torchdsp_triton_block_triton_block = R"doc()doc";
 
 
- static const char *__doc_gr_torchdsp_zcu216_source_make = R"doc()doc";
+ static const char *__doc_gr_torchdsp_triton_block_make = R"doc()doc";
 
   
