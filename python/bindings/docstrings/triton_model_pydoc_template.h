@@ -37,7 +37,16 @@
  static const char *__doc_gr_torchdsp_triton_model_get_output_sizes = R"doc()doc";
 
 
+ static const char *__doc_gr_torchdsp_triton_model_get_input_signature = R"doc()doc";
+
+
+ static const char *__doc_gr_torchdsp_triton_model_get_output_signature = R"doc()doc";
+
+
  static const char *__doc_gr_torchdsp_triton_model_infer = R"doc()doc";
+
+
+ static const char *__doc_gr_torchdsp_triton_model_infer_batch = R"doc()doc";
 
 
  static const char *__doc_gr_torchdsp_triton_model_make = R"doc()doc";

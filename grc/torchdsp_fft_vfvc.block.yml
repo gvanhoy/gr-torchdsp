@@ -4,7 +4,7 @@ category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.triton_block("${"fft_cpu_openvino" if device == 'cpu' else "fft_gpu"}", ${triton_url})
+  make: torchdsp.triton_block("${"fft_cpu_openvino" if device == 'cpu' else "fft_gpu"}", ${max_batch_size}, ${triton_url})
 
 parameters:
 - id: triton_url
@@ -16,21 +16,23 @@ parameters:
   dtype: enum
   options: [cpu, gpu]
   default: 'cpu'
+- id: max_batch_size
+  label: "Max Batch Size"
+  dtype: int
+  default: 256
 
 inputs:
 - label: in0
   domain: stream
   dtype: float
-  vlen: 512
+
 - label: in1
   domain: stream
   dtype: float
-  vlen: 512
 
 outputs:
 - label: out0
   domain: stream
   dtype: float
-  vlen: 1024
 
 file_format: 1

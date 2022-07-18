@@ -27,7 +27,6 @@ private:
 public:
     triton_block_impl(std::unique_ptr<triton_model>& model);
     ~triton_block_impl();
-    bool start();
 
     // Where all the action really happens
     int work(

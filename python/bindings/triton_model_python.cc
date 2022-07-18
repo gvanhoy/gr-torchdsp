@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(triton_model.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(4a23bf79874d20e28b29d3a4ecfec09e)                     */
+/* BINDTOOL_HEADER_FILE_HASH(44d7fe109a40b372f1f20ac7c176949e)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -38,6 +38,7 @@ void bind_triton_model(py::module& m)
 
         .def(py::init(&triton_model::make),
            py::arg("model_name"),
+           py::arg("max_batch_size"),
            py::arg("triton_url") = "localhost:8000",
            D(triton_model,make)
         )
@@ -69,10 +70,31 @@ void bind_triton_model(py::module& m)
 
 
         
+        .def("get_input_signature",&triton_model::get_input_signature,       
+            D(triton_model,get_input_signature)
+        )
+
+
+        
+        .def("get_output_signature",&triton_model::get_output_signature,       
+            D(triton_model,get_output_signature)
+        )
+
+
+        
         .def("infer",&triton_model::infer,       
             py::arg("in"),
             py::arg("out"),
             D(triton_model,infer)
+        )
+
+
+        
+        .def("infer_batch",&triton_model::infer_batch,       
+            py::arg("in"),
+            py::arg("out"),
+            py::arg("batch_size"),
+            D(triton_model,infer_batch)
         )
 
 

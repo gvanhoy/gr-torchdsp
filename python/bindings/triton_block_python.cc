@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(triton_block.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(255c0932fddd2e654689aa7b61c2044f)                     */
+/* BINDTOOL_HEADER_FILE_HASH(3c07ff08eb75e2a3405bc9870de622a2)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -38,6 +38,7 @@ void bind_triton_block(py::module& m)
 
         .def(py::init(&triton_block::make),
            py::arg("model_name"),
+           py::arg("max_batch_size"),
            py::arg("triton_url") = "localhost:8000",
            D(triton_block,make)
         )

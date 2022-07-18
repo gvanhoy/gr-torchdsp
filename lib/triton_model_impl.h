@@ -28,7 +28,9 @@ public:
     } io_metadata_t;
 
     typedef struct io_memory_s {
-        size_t byte_size;
+        size_t item_size;
+        size_t element_byte_size;
+        size_t batch_size;
         std::string shm_key;
         void* data_ptr;
     } io_memory_t;
@@ -42,32 +44,52 @@ private:
     std::vector<io_memory_t> outputs_;
     tc::InferResult* results_ = nullptr;
     tc::InferOptions options_;
+    size_t max_batch_size_;
 
 public:
-    triton_model_impl(const std::string& model_name, const std::string& triton_url);
+    triton_model_impl(
+        const std::string& model_name,
+        const size_t max_batch_size,
+        const std::string& triton_url);
 
     // We override these to prevent memory leaks.
     triton_model_impl(triton_model_impl&& other);
     triton_model_impl& operator=(triton_model_impl&& other);
 
-    ~triton_model_impl();
+    ~triton_model_impl() override;
 
     // Interface to GNU Radio Block
     int get_num_inputs() { return inputs_.size(); };
     int get_num_outputs() { return outputs_.size(); };
+    std::vector<int> get_input_signature() {
+        std::vector<int> itemsizes;
+        for (const auto& input : inputs_)
+            itemsizes.push_back(input.item_size);
+        return itemsizes;
+    }
+    std::vector<int> get_output_signature() {
+        std::vector<int> itemsizes;
+        for (const auto& output : outputs_)
+            itemsizes.push_back(output.item_size);
+        return itemsizes;
+    }
     std::vector<int> get_input_sizes() {
         std::vector<int> sizes;
         for (const auto& input : inputs_)
-            sizes.push_back(input.byte_size);
+            sizes.push_back(input.element_byte_size);
         return sizes;
     }
     std::vector<int> get_output_sizes() {
         std::vector<int> sizes;
         for (const auto& output : outputs_)
-            sizes.push_back(output.byte_size);
+            sizes.push_back(output.element_byte_size);
         return sizes;
     }
     void infer(std::vector<const char*> in_buffers, std::vector<char*> out_buffers);
+    void infer_batch(
+        std::vector<const char*> in_buffers,
+        std::vector<char*> out_buffers,
+        size_t batch_size);
 
 
     // Interface to Triton Server
@@ -106,7 +128,8 @@ public:
     // Configuring IO
     static int64_t itemsize(const std::string& data_type);
     static int64_t num_elements(const std::vector<int64_t>& shape);
-    static io_memory_t allocate_shm(const io_metadata_t& io_meta);
+    static io_memory_t
+    allocate_shm(const io_metadata_t& io_meta, const size_t max_batch_size);
 };
 
 } // namespace torchdsp

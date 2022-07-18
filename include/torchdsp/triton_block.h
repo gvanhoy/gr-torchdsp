@@ -32,8 +32,10 @@ public:
      * class. torchdsp::triton_block::make is the public interface for
      * creating new instances.
      */
-    static sptr
-    make(const std::string& model_name, const std::string& triton_url = "localhost:8000");
+    static sptr make(
+        const std::string& model_name,
+        const size_t max_batch_size,
+        const std::string& triton_url = "localhost:8000");
 };
 
 } // namespace torchdsp
