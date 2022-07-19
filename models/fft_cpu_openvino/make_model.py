@@ -1,25 +1,24 @@
 from torch import nn
 import torch
 
+FFT_SIZE = 512
+
 
 class FFT(nn.Module):
     def __init__(self):
         super(FFT, self).__init__()
 
-    def forward(self, x_real, x_imag):
-        raw_iq = x_real + 1j*x_imag
-        fft = torch.fft.fft(raw_iq, dim=1, norm="ortho")
-        return torch.cat([fft.real, fft.imag], dim=1)
+    def forward(self, iq_data):
+        torch.fft.fft(iq_data, dim=1, norm="ortho")
+        return iq_data
 
 
-batch_size = 1
-
-x = torch.randn(batch_size, 512, requires_grad=False)
+x = torch.randn(1, FFT_SIZE, requires_grad=False,
+                dtype=torch.cfloat)
 model = FFT()
 model.eval()
 
-print(x.shape, model(x, x).shape)
+print(x.shape, model(x).shape)
 
-scripted = torch.jit.trace(model, [x, x] )
+scripted = torch.jit.trace(model, [x])
 scripted.save("1/model.pt")
-

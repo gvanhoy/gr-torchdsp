@@ -148,19 +148,21 @@ triton_model_impl::triton_model_impl(
  *
  */
 triton_model_impl::~triton_model_impl() {
+    int idx = 0;
     for (const auto& input : inputs_) {
-        auto input_name = std::string("input_") + input.shm_key.substr(4);
-        client_->UnregisterSystemSharedMemory(input_name);
+        client_->UnregisterSystemSharedMemory(registered_input_names_[idx]);
         tc::UnmapSharedMemory(input.data_ptr, input.element_byte_size * input.batch_size);
         tc::UnlinkSharedMemoryRegion(input.shm_key);
+        idx++;
     }
 
+    idx = 0;
     for (const auto& output : outputs_) {
-        auto output_name = std::string("output_") + output.shm_key.substr(4);
-        client_->UnregisterSystemSharedMemory(output_name);
+        client_->UnregisterSystemSharedMemory(registered_output_names_[idx]);
         tc::UnmapSharedMemory(
             output.data_ptr, output.element_byte_size * output.batch_size);
         tc::UnlinkSharedMemoryRegion(output.shm_key);
+        idx++;
     }
 }
 
@@ -252,9 +254,13 @@ rapidjson::Document triton_model_impl::get_model_metadata(
 triton_model_impl::io_memory_t triton_model_impl::allocate_shm(
     const io_metadata_t& io_meta,
     const size_t max_batch_size) {
+
+    static unsigned int segment_number = 0;
+
     int shm_fd_ip;
     void* data_ptr;
-    std::string shm_key = std::string("/gr_") + io_meta.name;
+    std::string shm_key =
+        std::string("/gr_") + io_meta.name + std::to_string(segment_number);
     size_t num_bytes =
         num_elements(io_meta.shape) * itemsize(io_meta.datatype) * max_batch_size;
 
@@ -265,6 +271,7 @@ triton_model_impl::io_memory_t triton_model_impl::allocate_shm(
     if (!error.IsOk())
         return io_memory_t{ 0, 0, 0, "", 0 };
 
+    segment_number += 1;
     return io_memory_t{ static_cast<size_t>(itemsize(io_meta.datatype)),
                         num_bytes / max_batch_size,
                         max_batch_size,
@@ -283,6 +290,8 @@ void triton_model_impl::create_triton_input(
     const std::unique_ptr<tc::InferenceServerHttpClient>& client,
     const io_metadata_t& io_meta,
     const io_memory_t& io_mem) {
+
+    static int input_number = 0;
     // Create shared ptr for the InferInput
     tc::InferInput* input;
 
@@ -292,15 +301,17 @@ void triton_model_impl::create_triton_input(
     input_ptrs_.push_back(input_ptr);
 
     // Inform TIS about the memory
+    auto registered_name =
+        std::to_string(input_number) + std::string("input_") + io_meta.name;
+    registered_input_names_.push_back(registered_name);
+
     client->RegisterSystemSharedMemory(
-        std::string("input_") + io_meta.name,
-        io_mem.shm_key,
-        io_mem.element_byte_size * io_mem.batch_size);
+        registered_name, io_mem.shm_key, io_mem.element_byte_size * io_mem.batch_size);
 
     input_ptrs_.back()->SetSharedMemory(
-        std::string("input_") + io_meta.name,
-        io_mem.element_byte_size * io_mem.batch_size,
-        0);
+        registered_name, io_mem.element_byte_size * io_mem.batch_size, 0);
+
+    input_number += 1;
 }
 
 /**
@@ -314,6 +325,9 @@ void triton_model_impl::create_triton_output(
     const std::unique_ptr<tc::InferenceServerHttpClient>& client,
     const io_metadata_t& io_meta,
     const io_memory_t& io_mem) {
+
+    static int output_number = 0;
+
     // Create shared ptr for the InferRequestedOutput
     tc::InferRequestedOutput* output;
     std::shared_ptr<tc::InferRequestedOutput> output_ptr;
@@ -322,15 +336,20 @@ void triton_model_impl::create_triton_output(
     output_ptrs_.push_back(output_ptr);
 
     // Inform TIS about the memory
+    auto registered_name =
+        std::to_string(output_number) + std::string("output_") + io_meta.name;
+    registered_output_names_.push_back(registered_name);
     client->RegisterSystemSharedMemory(
-        std::string("output_") + io_meta.name,
+        std::to_string(output_number) + std::string("output_") + io_meta.name,
         io_mem.shm_key,
         io_mem.element_byte_size * io_mem.batch_size);
 
     output_ptrs_.back()->SetSharedMemory(
-        std::string("output_") + io_meta.name,
+        std::to_string(output_number) + std::string("output_") + io_meta.name,
         io_mem.element_byte_size * io_mem.batch_size,
         0);
+
+    output_number += 1;
 }
 
 void triton_model_impl::infer(

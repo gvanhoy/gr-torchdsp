@@ -2,21 +2,20 @@ from torch import nn
 import torch
 
 
-class Add(nn.Module):
+class AddConst(nn.Module):
     def __init__(self):
-        super(Add, self).__init__()
-        self.add = torch.randn(1, 16, requires_grad=False)
+        super(AddConst, self).__init__()
 
-    def forward(self, x): 
-        return x + self.add
+    def forward(self, x, y):
+        return x + y
 
 
-x = torch.randn(1, 16, requires_grad=False)
-model = Add()
+x = torch.randn(1, 1000, requires_grad=False)
+y = torch.randn(1, 1000, requires_grad=False)
+model = AddConst()
 model.eval()
 
-print(x.shape, model(x).shape)
+print(x.shape, model(x, y).shape)
 
-scripted = torch.jit.trace(model, x)
+scripted = torch.jit.trace(model, (x, y))
 scripted.save("1/model.pt")
-

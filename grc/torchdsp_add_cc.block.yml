@@ -1,10 +1,10 @@
-id: torchdsp_triton_fft_vfvc
-label: Triton FFT
+id: torchdsp_triton_add_cc
+label: Triton Add Complex
 category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.triton_block("${"fft_cpu_openvino" if device == 'cpu' else "fft_gpu"}", ${max_batch_size}, ${triton_url})
+  make: torchdsp.triton_block("${"add_cpu_openvino" if device == 'cpu' else "add_gpu"}", ${max_batch_size}, ${triton_url}, [8, 8], [8])
 
 parameters:
 - id: triton_url
@@ -15,7 +15,7 @@ parameters:
   label: "Device"
   dtype: enum
   options: [cpu, gpu]
-  default: 'cpu'
+  default: "cpu"
 - id: max_batch_size
   label: "Max Batch Size"
   dtype: int
@@ -24,15 +24,14 @@ parameters:
 inputs:
 - label: in0
   domain: stream
-  dtype: float
-
+  dtype: complex
 - label: in1
   domain: stream
-  dtype: float
+  dtype: complex
 
 outputs:
-- label: out0
+- label: out
   domain: stream
-  dtype: float
+  dtype: complex
 
 file_format: 1

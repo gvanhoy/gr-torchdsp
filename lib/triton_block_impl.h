@@ -25,7 +25,10 @@ private:
     std::unique_ptr<triton_model> model_;
 
 public:
-    triton_block_impl(std::unique_ptr<triton_model>& model);
+    triton_block_impl(
+        std::unique_ptr<triton_model>& model,
+        const std::vector<int>& input_sizes,
+        const std::vector<int>& output_sizes);
     ~triton_block_impl();
 
     // Where all the action really happens

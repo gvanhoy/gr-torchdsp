@@ -1,24 +1,22 @@
 name: "fft_cpu_openvino"
 backend: "pytorch"
+max_batch_size: 256
 input [
   {
     name: "input__0"
     data_type: TYPE_FP32
-    dims: [ 1, 512 ]
-  },
-  {
-    name: "input__1"
-    data_type: TYPE_FP32
-    dims: [ 1, 512 ]
+    dims: [ 1024 ]
   }
 ]
 output [
   {
     name: "output__0"
     data_type: TYPE_FP32
-    dims: [ 1, 1024 ]
+    dims: [ 1024 ]
   }
 ]
+
+dynamic_batching {}
 
 instance_group [
 	{

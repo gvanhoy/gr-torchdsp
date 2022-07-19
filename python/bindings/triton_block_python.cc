@@ -14,10 +14,11 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(triton_block.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(3c07ff08eb75e2a3405bc9870de622a2)                     */
+/* BINDTOOL_HEADER_FILE_HASH(f7050ebd5d1330b1a61365b9b161f3be)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -27,36 +28,27 @@ namespace py = pybind11;
 // pydoc.h is automatically generated in the build directory
 #include <triton_block_pydoc.h>
 
-void bind_triton_block(py::module& m)
-{
+void bind_triton_block(py::module& m) {
 
-    using triton_block    = ::gr::torchdsp::triton_block;
+    using triton_block = ::gr::torchdsp::triton_block;
 
 
-    py::class_<triton_block, gr::sync_block, gr::block, gr::basic_block,
+    py::class_<
+        triton_block,
+        gr::sync_block,
+        gr::block,
+        gr::basic_block,
         std::shared_ptr<triton_block>>(m, "triton_block", D(triton_block))
 
-        .def(py::init(&triton_block::make),
-           py::arg("model_name"),
-           py::arg("max_batch_size"),
-           py::arg("triton_url") = "localhost:8000",
-           D(triton_block,make)
-        )
-        
-
+        .def(
+            py::init(&triton_block::make),
+            py::arg("model_name"),
+            py::arg("max_batch_size"),
+            py::arg("triton_url") = "localhost:8000",
+            py::arg("input_sizes") = py::array_t<int>(),
+            py::arg("output_sizes") = py::array_t<int>(),
+            D(triton_block, make))
 
 
         ;
-
-
-
-
 }
-
-
-
-
-
-
-
-

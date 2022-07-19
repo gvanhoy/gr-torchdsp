@@ -1,19 +1,27 @@
 name: "add_cpu_openvino"
 backend: "pytorch"
+max_batch_size: 256
 input [
   {
     name: "input__0"
     data_type: TYPE_FP32
-    dims: [ 1, 16 ]
+    dims: [ 1000 ]
+  },
+  {
+    name: "input__1"
+    data_type: TYPE_FP32
+    dims: [ 1000 ]
   }
 ]
 output [
   {
     name: "output__0"
     data_type: TYPE_FP32
-    dims: [ 1, 16 ]
+    dims: [ 1000 ]
   }
 ]
+
+dynamic_batching {}
 
 optimization { execution_accelerators {
   cpu_execution_accelerator : [ {

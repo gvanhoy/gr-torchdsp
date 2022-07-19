@@ -9,9 +9,10 @@ install(FILES
     torchdsp_torch_fir_filter_ccc.block.yml
     torchdsp_torch_add_cc.block.yml
     torchdsp_add_ff.block.yml
+    torchdsp_add_cc.block.yml
     torchdsp_torch_multiply_const_vcvc.block.yml
+    torchdsp_fft_cc.block.yml
     torchdsp_torch_fft_vcc.block.yml
-    torchdsp_fft_vfvc.block.yml
     torchdsp_torch_script_infer_classify_vcvi.block.yml
     torchdsp_torch_min_max_normalize_vcvc.block.yml
     torchdsp_triton_block.block.yml

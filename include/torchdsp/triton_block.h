@@ -35,7 +35,9 @@ public:
     static sptr make(
         const std::string& model_name,
         const size_t max_batch_size,
-        const std::string& triton_url = "localhost:8000");
+        const std::string& triton_url = "localhost:8000",
+        const std::vector<int>& input_sizes = {},
+        const std::vector<int>& output_sizes = {});
 };
 
 } // namespace torchdsp

@@ -27,89 +27,74 @@ namespace py = pybind11;
 // pydoc.h is automatically generated in the build directory
 #include <triton_model_pydoc.h>
 
-void bind_triton_model(py::module& m)
-{
+void bind_triton_model(py::module& m) {
 
-    using triton_model    = ::gr::torchdsp::triton_model;
-
-
-    py::class_<triton_model,
-        std::shared_ptr<triton_model>>(m, "triton_model", D(triton_model))
-
-        .def(py::init(&triton_model::make),
-           py::arg("model_name"),
-           py::arg("max_batch_size"),
-           py::arg("triton_url") = "localhost:8000",
-           D(triton_model,make)
-        )
-        
+    using triton_model = ::gr::torchdsp::triton_model;
 
 
-        
-        .def("get_num_inputs",&triton_model::get_num_inputs,       
-            D(triton_model,get_num_inputs)
-        )
+    py::class_<triton_model, std::shared_ptr<triton_model>>(
+        m, "triton_model", D(triton_model))
+
+        .def(
+            py::init(&triton_model::make),
+            py::arg("model_name"),
+            py::arg("max_batch_size"),
+            py::arg("triton_url") = "localhost:8000",
+            D(triton_model, make))
 
 
-        
-        .def("get_num_outputs",&triton_model::get_num_outputs,       
-            D(triton_model,get_num_outputs)
-        )
+        .def(
+            "get_num_inputs",
+            &triton_model::get_num_inputs,
+            D(triton_model, get_num_inputs))
 
 
-        
-        .def("get_input_sizes",&triton_model::get_input_sizes,       
-            D(triton_model,get_input_sizes)
-        )
+        .def(
+            "get_num_outputs",
+            &triton_model::get_num_outputs,
+            D(triton_model, get_num_outputs))
 
 
-        
-        .def("get_output_sizes",&triton_model::get_output_sizes,       
-            D(triton_model,get_output_sizes)
-        )
+        .def(
+            "get_input_sizes",
+            &triton_model::get_input_sizes,
+            D(triton_model, get_input_sizes))
 
 
-        
-        .def("get_input_signature",&triton_model::get_input_signature,       
-            D(triton_model,get_input_signature)
-        )
+        .def(
+            "get_output_sizes",
+            &triton_model::get_output_sizes,
+            D(triton_model, get_output_sizes))
 
 
-        
-        .def("get_output_signature",&triton_model::get_output_signature,       
-            D(triton_model,get_output_signature)
-        )
+        .def(
+            "get_input_signature",
+            &triton_model::get_input_signature,
+            D(triton_model, get_input_signature))
 
 
-        
-        .def("infer",&triton_model::infer,       
+        .def(
+            "get_output_signature",
+            &triton_model::get_output_signature,
+            D(triton_model, get_output_signature))
+
+
+        .def(
+            "infer",
+            &triton_model::infer,
             py::arg("in"),
             py::arg("out"),
-            D(triton_model,infer)
-        )
+            D(triton_model, infer))
 
 
-        
-        .def("infer_batch",&triton_model::infer_batch,       
+        .def(
+            "infer_batch",
+            &triton_model::infer_batch,
             py::arg("in"),
             py::arg("out"),
             py::arg("batch_size"),
-            D(triton_model,infer_batch)
-        )
-
+            D(triton_model, infer_batch))
 
 
         ;
-
-
-
-
 }
-
-
-
-
-
-
-
-
