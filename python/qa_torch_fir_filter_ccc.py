@@ -12,15 +12,16 @@ import numpy as np
 
 # from gnuradio import blocks
 try:
-    from torchdsp import fir_filter_ccc
+    from torchdsp import torch_fir_filter_ccc
 except ImportError:
     import os
     import sys
     dirname, filename = os.path.split(os.path.abspath(__file__))
     sys.path.append(os.path.join(dirname, "bindings"))
-    from torchdsp import fir_filter_ccc
+    from torchdsp import torch_fir_filter_ccc
 
-class qa_fir_filter_ccc(gr_unittest.TestCase):
+
+class qa_torch_fir_filter_ccc(gr_unittest.TestCase):
 
     def setUp(self):
         self.tb = gr.top_block()
@@ -29,8 +30,9 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
         self.tb = None
 
     def test_instance(self):
-        taps = np.ones((12,), dtype=np.complex64) + 1j * np.ones((12,), dtype=np.complex64)
-        instance = fir_filter_ccc(taps, 1, 0)
+        taps = np.ones((12,), dtype=np.complex64) + 1j * \
+            np.ones((12,), dtype=np.complex64)
+        instance = torch_fir_filter_ccc(taps, 1, 0)
 
     def test_001_filter_matches_gnuradio_fir(self):
         taps = np.ones((12,), dtype=np.complex64) + 1.0j * \
@@ -39,7 +41,7 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
                       10001, endpoint=True)/2000)
 
         source = blocks.vector_source_c(data, False, 1)
-        filter_block = fir_filter_ccc(taps, 1, 0)
+        filter_block = torch_fir_filter_ccc(taps, 1, 0)
         sink = blocks.vector_sink_c(1)
 
         self.tb.connect(source, filter_block, sink)
@@ -47,7 +49,7 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
 
         self.tb2 = gr.top_block()
         source2 = blocks.vector_source_c(data, False, 1)
-        filter_block = filter.fir_filter_ccc(1, taps)
+        filter_block = filter.torch_fir_filter_ccc(1, taps)
         sink2 = blocks.vector_sink_c(1)
 
         self.tb2.connect(source2, filter_block, sink2)
@@ -58,7 +60,6 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
 
         self.assertTrue(np.allclose(output, expected, atol=.1))
 
-
     def test_002_downsample_filter_matches_gnuradio_fir(self):
         taps = np.ones((12,), dtype=np.complex64) + 1.0j * \
             np.ones((12,), dtype=np.complex64)
@@ -66,7 +67,7 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
                       10001, endpoint=True)/2000)
 
         source = blocks.vector_source_c(data, False, 1)
-        filter_block = fir_filter_ccc(taps, 2, 0)
+        filter_block = torch_fir_filter_ccc(taps, 2, 0)
         sink = blocks.vector_sink_c(1)
 
         self.tb.connect(source, filter_block, sink)
@@ -74,7 +75,7 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
 
         self.tb2 = gr.top_block()
         source2 = blocks.vector_source_c(data, False, 1)
-        filter_block = filter.fir_filter_ccc(2, taps)
+        filter_block = filter.torch_fir_filter_ccc(2, taps)
         sink2 = blocks.vector_sink_c(1)
 
         self.tb2.connect(source2, filter_block, sink2)
@@ -92,7 +93,7 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
                       10001, endpoint=True)/2000)
 
         source = blocks.vector_source_c(data, False, 1)
-        filter_block = fir_filter_ccc(taps, 3, 0)
+        filter_block = torch_fir_filter_ccc(taps, 3, 0)
         sink = blocks.vector_sink_c(1)
 
         self.tb.connect(source, filter_block, sink)
@@ -100,7 +101,7 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
 
         self.tb2 = gr.top_block()
         source2 = blocks.vector_source_c(data, False, 1)
-        filter_block = filter.fir_filter_ccc(3, taps)
+        filter_block = filter.torch_fir_filter_ccc(3, taps)
         sink2 = blocks.vector_sink_c(1)
 
         self.tb2.connect(source2, filter_block, sink2)
@@ -111,5 +112,6 @@ class qa_fir_filter_ccc(gr_unittest.TestCase):
 
         self.assertTrue(np.allclose(output, expected, atol=.1))
 
+
 if __name__ == '__main__':
-    gr_unittest.run(qa_fir_filter_ccc)
+    gr_unittest.run(qa_torch_fir_filter_ccc)

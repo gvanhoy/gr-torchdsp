@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(multiply_const_vcvc.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(1a8f18920a34ee811b01835178377fe6)                     */
+/* BINDTOOL_HEADER_FILE(torch_fft_vcc.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(fde5818d35f4172a3e346f4a728c9128)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,24 +23,39 @@
 
 namespace py = pybind11;
 
-#include <torchdsp/multiply_const_vcvc.h>
+#include <torchdsp/torch_fft_vcc.h>
 // pydoc.h is automatically generated in the build directory
-#include <multiply_const_vcvc_pydoc.h>
+#include <torch_fft_vcc_pydoc.h>
 
-void bind_multiply_const_vcvc(py::module& m)
+void bind_torch_fft_vcc(py::module& m)
 {
 
-    using multiply_const_vcvc = gr::torchdsp::multiply_const_vcvc;
+    using torch_fft_vcc    = ::gr::torchdsp::torch_fft_vcc;
 
 
-    py::class_<multiply_const_vcvc, gr::sync_block, gr::block, gr::basic_block, std::shared_ptr<multiply_const_vcvc>>(
-        m, "multiply_const_vcvc", D(multiply_const_vcvc))
+    py::class_<torch_fft_vcc, gr::sync_block, gr::block, gr::basic_block,
+        std::shared_ptr<torch_fft_vcc>>(m, "torch_fft_vcc", D(torch_fft_vcc))
 
-        .def(py::init(&multiply_const_vcvc::make),
-             py::arg("constant"),
-             py::arg("device_num"),
-             D(multiply_const_vcvc, make))
+        .def(py::init(&torch_fft_vcc::make),
+           py::arg("fft_len"),
+           py::arg("device_num"),
+           D(torch_fft_vcc,make)
+        )
+        
+
 
 
         ;
+
+
+
+
 }
+
+
+
+
+
+
+
+

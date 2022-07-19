@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(fft_vcc.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(9d6edd2db42a5939248dc6dbf2964882)                     */
+/* BINDTOOL_HEADER_FILE(torch_multiply_const_vcvc.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(40a1117161831ddc7c44bcfd5010a4f0)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,20 +23,39 @@
 
 namespace py = pybind11;
 
-#include <torchdsp/fft_vcc.h>
+#include <torchdsp/torch_multiply_const_vcvc.h>
 // pydoc.h is automatically generated in the build directory
-#include <fft_vcc_pydoc.h>
+#include <torch_multiply_const_vcvc_pydoc.h>
 
-void bind_fft_vcc(py::module& m)
+void bind_torch_multiply_const_vcvc(py::module& m)
 {
 
-    using fft_vcc = gr::torchdsp::fft_vcc;
+    using torch_multiply_const_vcvc    = ::gr::torchdsp::torch_multiply_const_vcvc;
 
 
-    py::class_<fft_vcc, gr::sync_block, gr::block, gr::basic_block, std::shared_ptr<fft_vcc>>(m, "fft_vcc", D(fft_vcc))
+    py::class_<torch_multiply_const_vcvc, gr::sync_block, gr::block, gr::basic_block,
+        std::shared_ptr<torch_multiply_const_vcvc>>(m, "torch_multiply_const_vcvc", D(torch_multiply_const_vcvc))
 
-        .def(py::init(&fft_vcc::make), py::arg("fft_len"), py::arg("device_num"), D(fft_vcc, make))
+        .def(py::init(&torch_multiply_const_vcvc::make),
+           py::arg("constant"),
+           py::arg("device_num"),
+           D(torch_multiply_const_vcvc,make)
+        )
+        
+
 
 
         ;
+
+
+
+
 }
+
+
+
+
+
+
+
+

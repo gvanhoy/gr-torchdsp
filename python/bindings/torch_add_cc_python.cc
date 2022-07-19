@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -13,8 +13,8 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(add_cc.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(863aefe19e2ad286357f202581479ce4)                     */
+/* BINDTOOL_HEADER_FILE(torch_add_cc.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(db613d15509466fb2974f38cbff4b501)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -23,20 +23,39 @@
 
 namespace py = pybind11;
 
-#include <torchdsp/add_cc.h>
+#include <torchdsp/torch_add_cc.h>
 // pydoc.h is automatically generated in the build directory
-#include <add_cc_pydoc.h>
+#include <torch_add_cc_pydoc.h>
 
-void bind_add_cc(py::module& m)
+void bind_torch_add_cc(py::module& m)
 {
 
-    using add_cc = gr::torchdsp::add_cc;
+    using torch_add_cc    = ::gr::torchdsp::torch_add_cc;
 
 
-    py::class_<add_cc, gr::block, gr::basic_block, std::shared_ptr<add_cc>>(m, "add_cc", D(add_cc))
+    py::class_<torch_add_cc, gr::sync_block, gr::block, gr::basic_block,
+        std::shared_ptr<torch_add_cc>>(m, "torch_add_cc", D(torch_add_cc))
 
-        .def(py::init(&add_cc::make), py::arg("num_inputs"), py::arg("device_num"), D(add_cc, make))
+        .def(py::init(&torch_add_cc::make),
+           py::arg("num_inputs"),
+           py::arg("device_num"),
+           D(torch_add_cc,make)
+        )
+        
+
 
 
         ;
+
+
+
+
 }
+
+
+
+
+
+
+
+

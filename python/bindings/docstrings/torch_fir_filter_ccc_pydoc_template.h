@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Free Software Foundation, Inc.
+ * Copyright 2022 Free Software Foundation, Inc.
  *
  * This file is part of GNU Radio
  *
@@ -16,9 +16,12 @@
 
 
  
- static const char *__doc_gr_torchdsp_add_cc = R"doc()doc";
+ static const char *__doc_gr_torchdsp_torch_fir_filter_ccc = R"doc()doc";
 
 
- static const char *__doc_gr_torchdsp_add_cc_make = R"doc()doc";
+ static const char *__doc_gr_torchdsp_torch_fir_filter_ccc_torch_fir_filter_ccc = R"doc()doc";
+
+
+ static const char *__doc_gr_torchdsp_torch_fir_filter_ccc_make = R"doc()doc";
 
   

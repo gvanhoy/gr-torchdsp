@@ -1,34 +1,34 @@
-id: torchdsp_fir_filter_ccc
-label: UTOPIA Decimating FIR Filter 
+id: torchdsp_torch_add_cc
+label: UTOPIA Add
 category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.fir_filter_ccc(${taps}, ${decim_rate}, ${device_num})
+  make: torchdsp.torch_add_cc(${num_inputs}, ${device_num})
 
 parameters:
 - id: device_num
   label: "CUDA Device #"
   dtype: int
-  default: 0
-- id: decim_rate
-  label: Decimation Rate
+  value: 0
+- id: num_inputs
+  label: "# Inputs"
   dtype: int
-  default: 1
-- id: taps
-  label: "Taps"
-  dtype: complex_vector
+  value: 2
 
 inputs:
-- label: in
+- label: in0
   domain: stream
   dtype: complex
   vlen: 1
+  multiplicity: ${ num_inputs }
 
 outputs:
 - label: out
   domain: stream
   dtype: complex
   vlen: 1
+
+
 
 file_format: 1

@@ -1,10 +1,10 @@
-id: torchdsp_fft_vcc
+id: torchdsp_torch_fft_vcc
 label: UTOPIA FFT
 category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.fft_vcc(${fft_len}, ${device_num})
+  make: torchdsp.torch_fft_vcc(${fft_len}, ${device_num})
 
 parameters:
 - id: device_num

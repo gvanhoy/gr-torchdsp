@@ -1,10 +1,10 @@
-id: torchdsp_multiply_const_vcvc
-label: multiply_const_vcvc
+id: torchdsp_torch_multiply_const_vcvc
+label: torch_multiply_const_vcvc
 category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.multiply_const_vcvc(${constant}, ${device_num})
+  make: torchdsp.torch_multiply_const_vcvc(${constant}, ${device_num})
 
 #  Make one 'parameters' list entry for every parameter you want settable from the GUI.
 #     Keys include:
@@ -15,7 +15,7 @@ parameters:
 - id: parametername_replace_me
   label: FIX ME:
   dtype: string
-  value: You need to fill in your grc/torchdsp_multiply_const_vcvc.block.yaml
+  value: You need to fill in your grc/torchdsp_torch_multiply_const_vcvc.block.yaml
 #- id: ...
 #  label: ...
 #  dtype: ...

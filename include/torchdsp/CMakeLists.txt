@@ -11,10 +11,10 @@
 # #######################################################################
 install(FILES
     api.h
-    fir_filter_ccc.h
-    add_cc.h
-    multiply_const_vcvc.h
-    fft_vcc.h
+    torch_fir_filter_ccc.h
+    torch_add_cc.h
+    torch_multiply_const_vcvc.h
+    torch_fft_vcc.h
     torch_script_infer_classify_vcvi.h
     torch_min_max_normalize_vcvc.h
     triton_block.h

@@ -19,17 +19,18 @@ namespace torchdsp {
  * \ingroup torchdsp
  *
  */
-class TORCHDSP_API multiply_const_vcvc : virtual public gr::sync_block
+class TORCHDSP_API torch_multiply_const_vcvc : virtual public gr::sync_block
 {
 public:
-    typedef std::shared_ptr<multiply_const_vcvc> sptr;
+    typedef std::shared_ptr<torch_multiply_const_vcvc> sptr;
 
     /*!
-     * \brief Return a shared_ptr to a new instance of torchdsp::multiply_const_vcvc.
+     * \brief Return a shared_ptr to a new instance of
+     * torchdsp::torch_multiply_const_vcvc.
      *
-     * To avoid accidental use of raw pointers, torchdsp::multiply_const_vcvc's
+     * To avoid accidental use of raw pointers, torchdsp::torch_multiply_const_vcvc's
      * constructor is in a private implementation
-     * class. torchdsp::multiply_const_vcvc::make is the public interface for
+     * class. torchdsp::torch_multiply_const_vcvc::make is the public interface for
      * creating new instances.
      */
     static sptr make(const std::vector<gr_complex>& constant, unsigned int device_num);

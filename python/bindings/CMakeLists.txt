@@ -28,10 +28,10 @@ include(GrPybind)
 # Python Bindings
 # #######################################################################
 list(APPEND torchdsp_python_files
-    fir_filter_ccc_python.cc
-    add_cc_python.cc
-    multiply_const_vcvc_python.cc
-    fft_vcc_python.cc
+    torch_fir_filter_ccc_python.cc
+    torch_add_cc_python.cc
+    torch_multiply_const_vcvc_python.cc
+    torch_fft_vcc_python.cc
     torch_script_infer_classify_vcvi_python.cc
     torch_min_max_normalize_vcvc_python.cc
     triton_block_python.cc

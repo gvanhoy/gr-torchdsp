@@ -19,17 +19,17 @@ namespace torchdsp {
  * \ingroup torchdsp
  *
  */
-class TORCHDSP_API add_cc : virtual public gr::sync_block
+class TORCHDSP_API torch_add_cc : virtual public gr::sync_block
 {
 public:
-    typedef std::shared_ptr<add_cc> sptr;
+    typedef std::shared_ptr<torch_add_cc> sptr;
 
     /*!
-     * \brief Return a shared_ptr to a new instance of torchdsp::add_cc.
+     * \brief Return a shared_ptr to a new instance of torchdsp::torch_add_cc.
      *
-     * To avoid accidental use of raw pointers, torchdsp::add_cc's
+     * To avoid accidental use of raw pointers, torchdsp::torch_add_cc's
      * constructor is in a private implementation
-     * class. torchdsp::add_cc::make is the public interface for
+     * class. torchdsp::torch_add_cc::make is the public interface for
      * creating new instances.
      */
     static sptr make(unsigned int num_inputs, unsigned int device_num);

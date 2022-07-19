@@ -19,17 +19,17 @@ namespace torchdsp {
  * \ingroup torchdsp
  *
  */
-class TORCHDSP_API fft_vcc : virtual public gr::sync_block
+class TORCHDSP_API torch_fft_vcc : virtual public gr::sync_block
 {
 public:
-    typedef std::shared_ptr<fft_vcc> sptr;
+    typedef std::shared_ptr<torch_fft_vcc> sptr;
 
     /*!
-     * \brief Return a shared_ptr to a new instance of torchdsp::fft_vcc.
+     * \brief Return a shared_ptr to a new instance of torchdsp::torch_fft_vcc.
      *
-     * To avoid accidental use of raw pointers, torchdsp::fft_vcc's
+     * To avoid accidental use of raw pointers, torchdsp::torch_fft_vcc's
      * constructor is in a private implementation
-     * class. torchdsp::fft_vcc::make is the public interface for
+     * class. torchdsp::torch_fft_vcc::make is the public interface for
      * creating new instances.
      */
     static sptr make(unsigned int fft_len, unsigned int device_num);

@@ -11,10 +11,10 @@
 # #######################################################################
 include(GrPlatform) # define LIB_SUFFIX
 list(APPEND torchdsp_sources
-    fir_filter_ccc_impl.cc
-    add_cc_impl.cc
-    multiply_const_vcvc_impl.cc
-    fft_vcc_impl.cc
+    torch_fir_filter_ccc_impl.cc
+    torch_add_cc_impl.cc
+    torch_multiply_const_vcvc_impl.cc
+    torch_fft_vcc_impl.cc
     torch_script_infer_classify_vcvi_impl.cc
     torch_min_max_normalize_vcvc_impl.cc
     triton_block_impl.cc
