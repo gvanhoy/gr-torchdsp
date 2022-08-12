@@ -17,6 +17,13 @@ make -j install
 ldconfig
 ```
 
+## Installing the models
+You'll need to install PyTorch to generate the model files -- it shouldn't need a GPU version of PyTorch as it's only using PyTorch modules, but perhaps it does.
+```
+pip install torch
+python3 make_models.py
+```
+
 ## Running the OOT
 ```
 sudo docker run --gpus all -it -p 8001:8001 --ipc=host --rm -v /path/to/models/directory/in/OOT:/models nvcr.io/nvidia/tritonserver:22.04-py3 tritonserver --log-verbose 0 --model-repository=/models --strict-model-config=false
