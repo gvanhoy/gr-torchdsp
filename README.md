@@ -1,16 +1,15 @@
 # gr-torchdsp
 
-## Building the Container
-```
-sudo docker build -t gr-torchdsp -f Dockerfile . 
-sudo docker run --network=host --gpus all -it --rm -v `pwd`:/workspace/code gr-torchdsp bash
-```
+# Install
+## Installing Dependencies
+Looking at the ```Dockerfile```, you can see what dependencies are necessary for Ubuntu 20.04. By running the commands shown in the Dockerfile by removing "RUN" statements, you should be able to install locally.
 
-## Building the OOT
+
+## Installing the OOT
 ```
 mkdir build
 cd build
-cmake Torch_DIR=/libtorch cmake -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCMAKE_BUILD_TYPE=Release ../
 make -j install
 ldconfig
 ```

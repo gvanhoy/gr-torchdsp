@@ -21,12 +21,12 @@ namespace py = pybind11;
 // Please do not delete
 /**************************************/
 // BINDING_FUNCTION_PROTOTYPES(
-void bind_torch_fir_filter_ccc(py::module& m);
+// void bind_torch_fir_filter_ccc(py::module& m);
 void bind_torch_add_cc(py::module& m);
-void bind_torch_multiply_const_vcvc(py::module& m);
+// void bind_torch_multiply_const_vcvc(py::module& m);
 void bind_torch_fft_vcc(py::module& m);
-void bind_torch_script_infer_classify_vcvi(py::module& m);
-void bind_torch_min_max_normalize_vcvc(py::module& m);
+// void bind_torch_script_infer_classify_vcvi(py::module& m);
+// void bind_torch_min_max_normalize_vcvc(py::module& m);
 void bind_triton_block(py::module& m);
 void bind_triton_model(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
@@ -55,12 +55,12 @@ PYBIND11_MODULE(torchdsp_python, m) {
     // Please do not delete
     /**************************************/
     // BINDING_FUNCTION_CALLS(
-    bind_torch_fir_filter_ccc(m);
+    // bind_torch_fir_filter_ccc(m);
     bind_torch_add_cc(m);
-    bind_torch_multiply_const_vcvc(m);
+    // bind_torch_multiply_const_vcvc(m);
     bind_torch_fft_vcc(m);
-    bind_torch_script_infer_classify_vcvi(m);
-    bind_torch_min_max_normalize_vcvc(m);
+    // bind_torch_script_infer_classify_vcvi(m);
+    // bind_torch_min_max_normalize_vcvc(m);
     bind_triton_block(m);
     bind_triton_model(m);
     // ) END BINDING_FUNCTION_CALLS
