@@ -1,0 +1,34 @@
+id: torchdsp_fir_filter_ff
+label: Triton FIR Filter
+category: '[torchdsp]'
+
+templates:
+  imports: import torchdsp
+  make: torchdsp.triton_fir_filter_ff("${"fir_filter_ff_cpu_openvino" if device == 'cpu' else "fir_filter_ff_gpu"}", ${triton_url}, ${tap_size})
+
+parameters:
+- id: triton_url
+  label: "Triton URL"
+  dtype: string
+  default: "localhost:8000"
+- id: device
+  label: "Device"
+  dtype: enum
+  options: [cpu, gpu]
+  default: 'cpu'
+- id: tap_size
+  label: "Tap Size"
+  dtype: int
+  default: 64
+
+inputs:
+- label: in
+  domain: stream
+  dtype: float
+
+outputs:
+- label: out
+  domain: stream
+  dtype: float
+
+file_format: 1

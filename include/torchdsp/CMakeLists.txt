@@ -18,5 +18,6 @@ install(FILES
     # torch_script_infer_classify_vcvi.h
     # torch_min_max_normalize_vcvc.h
     triton_block.h
-    triton_model.h DESTINATION include/torchdsp
+    triton_model.h
+    triton_fir_filter_ff.h DESTINATION include/torchdsp
 )

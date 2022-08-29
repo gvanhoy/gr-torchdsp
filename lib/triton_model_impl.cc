@@ -355,6 +355,7 @@ void triton_model_impl::create_triton_output(
 void triton_model_impl::infer(
     std::vector<const char*> in_buffers,
     std::vector<char*> out_buffers) {
+
     // it'd be great if we can avoid this, but really may not be necessary to avoid
     for (uint16_t idx = 0; idx < in_buffers.size(); idx++)
         std::memcpy(
@@ -390,6 +391,7 @@ void triton_model_impl::infer_batch(
             inputs_[idx].data_ptr,
             in_buffers[idx],
             inputs_[idx].element_byte_size * batch_size);
+
 
     std::vector<tc::InferInput*> inputs;
     for (const auto& input_ptr : input_ptrs_) {

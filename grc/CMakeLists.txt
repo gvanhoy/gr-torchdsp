@@ -16,5 +16,6 @@ install(FILES
     # torchdsp_torch_script_infer_classify_vcvi.block.yml
     # torchdsp_torch_min_max_normalize_vcvc.block.yml
     torchdsp_triton_block.block.yml
+    torchdsp_triton_fir_filter_ff.block.yml
     DESTINATION share/gnuradio/grc/blocks
 )

@@ -29,6 +29,7 @@ namespace py = pybind11;
 // void bind_torch_min_max_normalize_vcvc(py::module& m);
 void bind_triton_block(py::module& m);
 void bind_triton_model(py::module& m);
+void bind_triton_fir_filter_ff(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -63,5 +64,7 @@ PYBIND11_MODULE(torchdsp_python, m) {
     // bind_torch_min_max_normalize_vcvc(m);
     bind_triton_block(m);
     bind_triton_model(m);
+    bind_triton_fir_filter_ff(m);
+
     // ) END BINDING_FUNCTION_CALLS
 }
