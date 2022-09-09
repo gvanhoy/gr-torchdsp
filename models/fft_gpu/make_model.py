@@ -9,11 +9,17 @@ class FFT(nn.Module):
         super(FFT, self).__init__()
 
     def forward(self, iq_data):
-        torch.fft.fft(iq_data, dim=1, norm="ortho")
-        return iq_data
+        # For some reason, fftshift doesn't work...
+        result = torch.roll(torch.fft.fft(
+            iq_data, dim=2, norm="ortho"),
+            FFT_SIZE // 2
+        )
+        # We do this because TIS doesn't like complex outputs sometimes
+        result = torch.cat([result.real, result.imag], dim=1)
+        return result.permute((0, 2, 1))
 
 
-x = torch.randn(1, FFT_SIZE, requires_grad=False,
+x = torch.randn(1, 1, FFT_SIZE, requires_grad=False,
                 dtype=torch.cfloat)
 model = FFT()
 model.eval()

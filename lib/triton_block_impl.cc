@@ -76,6 +76,7 @@ int triton_block_impl::work(
     auto num_items_per_batch =
         model_.get()->get_output_sizes()[0] / model_.get()->get_output_signature()[0];
     auto batch_size = noutput_items / num_items_per_batch;
+
     model_->infer_batch(in_ptrs, out_ptrs, batch_size);
 
     return noutput_items;

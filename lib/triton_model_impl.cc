@@ -386,12 +386,15 @@ void triton_model_impl::infer_batch(
     std::vector<char*> out_buffers,
     size_t batch_size) {
 
+
     for (uint16_t idx = 0; idx < in_buffers.size(); idx++)
         std::memcpy(
             inputs_[idx].data_ptr,
             in_buffers[idx],
             inputs_[idx].element_byte_size * batch_size);
 
+    // std::cout << "First input " << static_cast<float*>(inputs_[0].data_ptr)[0]
+    //           << std::endl;
 
     std::vector<tc::InferInput*> inputs;
     for (const auto& input_ptr : input_ptrs_) {
@@ -413,6 +416,13 @@ void triton_model_impl::infer_batch(
     client_->Infer(&result, options_, inputs, outputs);
 
     // std::cout << "Inferred on result" << std::endl;
+    // std::cout << "Copying " << batch_size << " batches of size ";
+    // std::cout << outputs_[0].element_byte_size << std::endl;
+
+    // std::cout << "First output "
+    //           << static_cast<const float*>(
+    //                  static_cast<const void*>(outputs_[0].data_ptr))[0]
+    //           << std::endl;
     // it'd be great if we can avoid this, but really may not be necessary to avoid
     for (uint16_t idx = 0; idx < out_buffers.size(); idx++)
         std::memcpy(
