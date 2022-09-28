@@ -1,0 +1,80 @@
+name: "beamform_cc_cpu_openvino"
+backend: "pytorch"
+max_batch_size: 4096
+input [
+  {
+    name: "input__0"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__1"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__2"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__3"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+    {
+    name: "input__4"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__5"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__6"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__7"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  },
+  {
+    name: "input__8"
+    data_type: TYPE_FP32
+    dims: [ 1, 4 ]
+  },
+  {
+    name: "input__9"
+    data_type: TYPE_FP32
+    dims: [ 1, 4 ]
+  }
+]
+output [
+  {
+    name: "output__0"
+    data_type: TYPE_FP32
+    dims: [ 2, 1000 ]
+  }
+]
+
+
+dynamic_batching {}
+
+optimization { execution_accelerators {
+  cpu_execution_accelerator : [ {
+    name : "openvino"
+  }]
+}}
+
+
+instance_group [
+	{
+		count: 1
+		kind: KIND_CPU
+	}
+]
+

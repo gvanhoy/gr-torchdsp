@@ -120,6 +120,8 @@ find_package(Doxygen)
 # find_package(CUDA REQUIRED COMPONENTS cudart)
 find_package(CURL REQUIRED)
 find_package(RapidJSON REQUIRED)
+find_package(protobuf CONFIG REQUIRED)
+find_package(gRPC CONFIG REQUIRED)
 find_package(TritonCommon CONFIG)
 find_package(TritonClient CONFIG)
 

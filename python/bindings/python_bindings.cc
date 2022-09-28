@@ -30,6 +30,7 @@ namespace py = pybind11;
 void bind_triton_block(py::module& m);
 void bind_triton_model(py::module& m);
 void bind_triton_fir_filter_ff(py::module& m);
+    void bind_dpu_fir_filter(py::module& m);
 // ) END BINDING_FUNCTION_PROTOTYPES
 
 
@@ -66,5 +67,6 @@ PYBIND11_MODULE(torchdsp_python, m) {
     bind_triton_model(m);
     bind_triton_fir_filter_ff(m);
 
+    bind_dpu_fir_filter(m);
     // ) END BINDING_FUNCTION_CALLS
 }

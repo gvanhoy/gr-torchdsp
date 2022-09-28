@@ -1,4 +1,8 @@
-# gr-torchdsp
+# TorchDSP
+TorchDSP is a GNU Radio Out-Of-Tree (OOT) module implementing common DSP operations and machine-learning (ML) models
+using popular inference servers as backends. Triton Inference Server (TIS) and AMD/Xilinx Inference Server (AIS) 
+provide interfaces to perform inference using models defined in traditionally ML-focued frameworks such as 
+PyTorch and Tensorflow.
 
 # Install
 ## Installing TIS Dependencies
@@ -8,9 +12,16 @@ Running TIS in a container is the easiest way to run this OOT. To do so, you'll 
 2. [Docker](https://docs.docker.com/engine/install/ubuntu/)
 3. The ```nvidia-container-toolkit```, which can be installed via ```apt```.
 
+## Installing AIS Dependencies
+AMD/Xilinx Inference Server has not yet been successfully integrated into this OOT. In it's place is a set of programs
+that emulate a server using a very simplified GRPC interface. Without AIS, the only board currently supported is the KRIA KV260.
+
+To setup the KRIA KV260 for use with DPU's, you need to follow the directions in [Step 2 of the Vitis-AI documentation](https://github.com/Xilinx/Vitis-AI/tree/master/setup/mpsoc).
+
+In addition, to build models that can be executed on the DPU, you can use the prebuilt ```xilinx/vitis-ai``` container on DockerHub or follow the [directions on how to build the GPU-capable container](https://github.com/Xilinx/Vitis-AI/blob/master/README.md) in the README. Using the GPU-capable container is not necessary and the build takes a long time, but it makes quantizing models much faster.
+
 ## Installing OOT Dependencies
 Looking at the ```Dockerfile```, you can see what dependencies are necessary for Ubuntu 20.04. By running the commands shown in the Dockerfile by removing "RUN" statements, you should be able to install dependencies for the OOT *locally*. Unfortunately, TIS client libraries require a newer version of CMake than what comes with Ubuntu 20.04, but KitWare provides PPA's for this, making installation much more simple.
-
 
 ## Installing the OOT
 With dependencies installed, building the OOT is done with a standard CMake installation.
@@ -35,9 +46,9 @@ sudo docker run -v `pwd`:/build pytorch/pytorch bash -c 'cd /build && python3 ma
 sudo chown -R $USER models/
 ```
 
-## Running the OOT
+# Running the OOT
 To run the OOT, you need to have TIS running, Docker is by far the easiest way to run this. Make sure you change ```/path/to/models/directory/in/OOT``` to the relevant file path.
 
 ```
-sudo docker run --gpus all -it -p 8000:8000 --ipc=host --rm -v /path/to/models/directory/in/OOT:/models nvcr.io/nvidia/tritonserver:22.04-py3 tritonserver --log-verbose 0 --model-repository=/models --strict-model-config=false
+sudo docker run --gpus all -it -p 8000:8000 --ipc=host --rm -v /path/to/models/directory/in/OOT/triton:/models nvcr.io/nvidia/tritonserver:22.04-py3 tritonserver --log-verbose 0 --model-repository=/models --strict-model-config=false
 ```

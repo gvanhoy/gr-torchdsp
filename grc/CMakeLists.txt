@@ -17,5 +17,7 @@ install(FILES
     # torchdsp_torch_min_max_normalize_vcvc.block.yml
     torchdsp_triton_block.block.yml
     torchdsp_triton_fir_filter_ff.block.yml
-    DESTINATION share/gnuradio/grc/blocks
+    torchdsp_matrix_multiply_ff.block.yml
+    torchdsp_beamform_cc.block.yml
+    torchdsp_dpu_fir_filter.block.yml DESTINATION share/gnuradio/grc/blocks
 )

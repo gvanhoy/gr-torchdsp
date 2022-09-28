@@ -19,5 +19,6 @@ install(FILES
     # torch_min_max_normalize_vcvc.h
     triton_block.h
     triton_model.h
-    triton_fir_filter_ff.h DESTINATION include/torchdsp
+    triton_fir_filter_ff.h
+    dpu_fir_filter.h DESTINATION include/torchdsp
 )
