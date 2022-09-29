@@ -1,10 +1,10 @@
-id: torchdsp_triton_add_ff
-label: Triton Add
+id: torchdsp_triton_beamform_cc
+label: Triton Beamform
 category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.triton_block("${"add_cpu_openvino" if device == 'cpu' else "add_gpu"}", ${max_batch_size}, ${triton_url})
+  make: torchdsp.triton_block("${"beamform_cc_cpu_openvino" if device == 'cpu' else "beamform_cc_gpu"}", ${max_batch_size}, ${triton_url}, [8, 8, 8, 8], [8])
 
 parameters:
 - id: triton_url
@@ -15,23 +15,29 @@ parameters:
   label: "Device"
   dtype: enum
   options: [cpu, gpu]
-  default: "cpu"
+  default: 'cpu'
 - id: max_batch_size
   label: "Max Batch Size"
   dtype: int
-  default: 256
+  default: 4096
 
 inputs:
 - label: in0
   domain: stream
-  dtype: float
+  dtype: complex
 - label: in1
   domain: stream
-  dtype: float
+  dtype: complex
+- label: in2
+  domain: stream
+  dtype: complex
+- label: in3
+  domain: stream
+  dtype: complex
 
 outputs:
 - label: out
   domain: stream
-  dtype: float
+  dtype: complex
 
 file_format: 1

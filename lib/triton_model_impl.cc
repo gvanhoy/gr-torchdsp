@@ -393,7 +393,10 @@ void triton_model_impl::infer_batch(
             in_buffers[idx],
             inputs_[idx].element_byte_size * batch_size);
 
-    // std::cout << "First input " << static_cast<float*>(inputs_[0].data_ptr)[0]
+    // std::cout << "First buffer "
+    //           << static_cast<const float*>(static_cast<const void*>(in_buffers[1]))[0]
+    //           << std::endl;
+    // std::cout << "First input " << static_cast<float*>(inputs_[1].data_ptr)[0]
     //           << std::endl;
 
     std::vector<tc::InferInput*> inputs;
@@ -421,7 +424,7 @@ void triton_model_impl::infer_batch(
 
     // std::cout << "First output "
     //           << static_cast<const float*>(
-    //                  static_cast<const void*>(outputs_[0].data_ptr))[0]
+    //                  static_cast<const void*>(outputs_[0].data_ptr))[500]
     //           << std::endl;
     // it'd be great if we can avoid this, but really may not be necessary to avoid
     for (uint16_t idx = 0; idx < out_buffers.size(); idx++)

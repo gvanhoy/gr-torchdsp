@@ -1,50 +1,54 @@
-from array import array
 from torch import nn
+import numpy as np
 import torch
 
 
 class Beamform(nn.Module):
     def __init__(self):
         super(Beamform, self).__init__()
+        self.bf = torch.ones((1, 8), dtype=torch.float32)
+        # self.bf[1::2] = 0.0
 
     def forward(
         self,
-        in0_real,
-        in0_imag,
-        in1_real,
-        in1_imag,
-        in2_real,
-        in2_imag,
-        in3_real,
-        in3_imag,
-        bf_real,
-        bf_imag
+        in0,
+        in1,
+        in2,
+        in3
     ):
-        in_real = torch.cat((in0_real, in1_real, in2_real, in3_real), dim=1)
-        in_imag = torch.cat((in0_imag, in1_imag, in2_imag, in3_imag), dim=1)
+        in_real = torch.cat((in0[::2], in1[::2], in2[::2],
+                            in3[::2]), dim=0).reshape(-1, 4, 1000)
+        in_imag = torch.cat((in0[1::2], in1[1::2], in2[1::2],
+                            in3[1::2]), dim=0).reshape(-1, 4, 1000)
 
-        a = torch.matmul(bf_real, in_real)
-        d = torch.matmul(bf_imag, in_imag)
+        bf_real = self.bf[0, ::2].reshape(-1, 1, 4)
+        bf_imag = self.bf[0, 1::2].reshape(-1, 1, 4)
+        out_real = torch.matmul(bf_real, in_real) - \
+            torch.matmul(bf_imag, in_imag)
+        out_imag = torch.matmul(bf_imag, in_real) + \
+            torch.matmul(bf_real, in_imag)
+        result = torch.cat([out_real, out_imag], dim=0)
 
-        b = torch.matmul(bf_imag, in_real)
-        c = torch.matmul(bf_real, in_imag)
-        out = torch.cat((torch.mul(a, c) - torch.mul(b, d),
-                        torch.mul(a, d) + torch.mul(b, c)), dim=1)
-        out = out.permute((0, 2, 1))
-        return out
+        # in_matrix = torch.cat((in0, in1, in2, in3), dim=0).reshape(-1, 4, 1000)
+        # out = torch.matmul(self.bf, in_matrix)
+        # result = torch.cat([out.real, out.imag], dim=0)
+        return result
 
 
-x = torch.randn(1, 1, 1000, requires_grad=False,
+x = torch.randn(4, 2000, requires_grad=False,
                 dtype=torch.float32)
-
-bf = torch.randn(1, 1, 4, requires_grad=False,
-                 dtype=torch.float32)
 
 model = Beamform()
 model.eval()
 
-print(x.shape, model(x, x, x, x, x, x, x, x, bf, bf)[0].shape)
+model_output = model(x[0], x[1],
+                     x[2], x[3])
+print(x.shape, model_output.shape, model_output.flatten()[:10])
 
-scripted = torch.jit.trace(
-    model, (x, x, x, x, x, x, x, x, bf, bf))
+scripted = torch.jit.trace(model, (x[0], x[1],
+                                   x[2], x[3]))
 scripted.save("1/model.pt")
+
+scripted_output = scripted(x[0], x[1],
+                           x[2], x[3])
+print(scripted_output.shape)

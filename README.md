@@ -1,4 +1,4 @@
-# TorchDSP
+# TorchDSP (Work in Progress)
 TorchDSP is a GNU Radio Out-Of-Tree (OOT) module implementing common DSP operations and machine-learning (ML) models
 using popular inference servers as backends. Triton Inference Server (TIS) and AMD/Xilinx Inference Server (AIS) 
 provide interfaces to perform inference using models defined in traditionally ML-focued frameworks such as 
@@ -13,8 +13,7 @@ Running TIS in a container is the easiest way to run this OOT. To do so, you'll 
 3. The ```nvidia-container-toolkit```, which can be installed via ```apt```.
 
 ## Installing AIS Dependencies
-AMD/Xilinx Inference Server has not yet been successfully integrated into this OOT. In it's place is a set of programs
-that emulate a server using a very simplified GRPC interface. Without AIS, the only board currently supported is the KRIA KV260.
+AMD/Xilinx Inference Server has not yet been successfully integrated into this OOT, but code has been put has been included to generate quantized DSP operations that can be actuated on the dpu
 
 To setup the KRIA KV260 for use with DPU's, you need to follow the directions in [Step 2 of the Vitis-AI documentation](https://github.com/Xilinx/Vitis-AI/tree/master/setup/mpsoc).
 

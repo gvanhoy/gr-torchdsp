@@ -48,8 +48,10 @@ triton_block_impl::triton_block_impl(
           gr::io_signature::makev(1, -1, output_sizes)),
       model_(std::move(model)) // this is invoked after calling sync_block constructor.
 {
+
     set_output_multiple(
         model_.get()->get_output_sizes()[0] / model_.get()->get_output_signature()[0]);
+
     std::cout << "Instantiated block" << std::endl;
 }
 
@@ -63,7 +65,6 @@ int triton_block_impl::work(
     gr_vector_const_void_star& input_items,
     gr_vector_void_star& output_items) {
 
-    // std::cout << "Got " << noutput_items << " to produce." << std::endl;
     std::vector<const char*> in_ptrs;
     for (const auto& item : input_items)
         in_ptrs.push_back(static_cast<const char*>(item));

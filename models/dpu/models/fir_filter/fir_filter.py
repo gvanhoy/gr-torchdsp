@@ -5,8 +5,8 @@ import torch
 
 class FIRFilter(nn.Module):
     """ 
-
     """
+
     def __init__(self, taps: np.ndarray):
         super(FIRFilter, self).__init__()
         taps = np.pad(taps, (0, 64*16 - taps.shape[0]))
