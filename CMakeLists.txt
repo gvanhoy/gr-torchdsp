@@ -117,11 +117,11 @@ endif(APPLE)
 # Find gnuradio build dependencies
 # #######################################################################
 find_package(Doxygen)
-find_package(Torch REQUIRED)
+# find_package(CUDA REQUIRED COMPONENTS cudart)
 find_package(CURL REQUIRED)
 find_package(RapidJSON REQUIRED)
-find_package(TritonCommon CONFIG REQUIRED)
-find_package(TritonClient CONFIG REQUIRED)
+find_package(TritonCommon CONFIG)
+find_package(TritonClient CONFIG)
 
 # #######################################################################
 # PyBind11 Related

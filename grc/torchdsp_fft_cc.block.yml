@@ -1,0 +1,34 @@
+id: torchdsp_triton_fft_vfvc
+label: Triton FFT
+category: '[torchdsp]'
+
+templates:
+  imports: import torchdsp
+  make: torchdsp.triton_block("${"fft_cpu_openvino" if device == 'cpu' else "fft_gpu"}", ${max_batch_size}, ${triton_url}, [8], [8])
+
+parameters:
+- id: triton_url
+  label: "Triton URL"
+  dtype: string
+  default: "localhost:8000"
+- id: device
+  label: "Device"
+  dtype: enum
+  options: [cpu, gpu]
+  default: 'cpu'
+- id: max_batch_size
+  label: "Max Batch Size"
+  dtype: int
+  default: 256
+
+inputs:
+- label: in
+  domain: stream
+  dtype: complex
+
+outputs:
+- label: out
+  domain: stream
+  dtype: complex
+
+file_format: 1

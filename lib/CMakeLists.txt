@@ -11,15 +11,10 @@
 # #######################################################################
 include(GrPlatform) # define LIB_SUFFIX
 list(APPEND torchdsp_sources
-    torch_fir_filter_ccc_impl.cc
-    torch_add_cc_impl.cc
-    torch_multiply_const_vcvc_impl.cc
-    torch_fft_vcc_impl.cc
-    torch_script_infer_classify_vcvi_impl.cc
-    torch_min_max_normalize_vcvc_impl.cc
-    triton_block_impl.cc
     shm_utils.cc
+    triton_fir_filter_ff_impl.cc
     triton_model_impl.cc
+    triton_block_impl.cc
 )
 
 set(torchdsp_sources "${torchdsp_sources}" PARENT_SCOPE)
@@ -30,7 +25,7 @@ if(NOT torchdsp_sources)
 endif(NOT torchdsp_sources)
 
 add_library(gnuradio-torchdsp SHARED ${torchdsp_sources})
-target_link_libraries(gnuradio-torchdsp gnuradio::gnuradio-runtime "${TORCH_LIBRARIES}" TritonClient::httpclient "${RapidJSON_LIBRARIES}")
+target_link_libraries(gnuradio-torchdsp gnuradio::gnuradio-runtime TritonClient::httpclient "${RapidJSON_LIBRARIES}")
 target_include_directories(gnuradio-torchdsp
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
     PUBLIC $<INSTALL_INTERFACE:include>

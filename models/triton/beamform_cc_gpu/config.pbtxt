@@ -1,0 +1,44 @@
+name: "beamform_cc_gpu"
+backend: "pytorch"
+max_batch_size: 4096
+input [
+  {
+    name: "input__0"
+    data_type: TYPE_FP32
+    dims: [ 2000, 1 ]
+  },
+  {
+    name: "input__1"
+    data_type: TYPE_FP32
+    dims: [ 2000, 1 ]
+  },
+  {
+    name: "input__2"
+    data_type: TYPE_FP32
+    dims: [ 2000, 1 ]
+  },
+  {
+    name: "input__3"
+    data_type: TYPE_FP32
+    dims: [ 2000, 1 ]
+  }
+]
+output [
+  {
+    name: "output__0"
+    data_type: TYPE_FP32
+    dims: [ 1, 1000 ]
+  }
+]
+
+
+dynamic_batching {}
+
+instance_group [
+	{
+		count: 1
+		kind: KIND_GPU
+	}
+]
+
+

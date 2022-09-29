@@ -13,41 +13,39 @@
 /* If manual edits are made, the following tags should be modified accordingly.    */
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
-/* BINDTOOL_HEADER_FILE(triton_block.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(f7050ebd5d1330b1a61365b9b161f3be)                     */
+/* BINDTOOL_HEADER_FILE(triton_fir_filter_ff.h)                                        */
+/* BINDTOOL_HEADER_FILE_HASH(5586bfbe740c447290c6a6dfb3caa279)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
-#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
 namespace py = pybind11;
 
-#include <torchdsp/triton_block.h>
+#include <torchdsp/triton_fir_filter_ff.h>
 // pydoc.h is automatically generated in the build directory
-#include <triton_block_pydoc.h>
+#include <triton_fir_filter_ff_pydoc.h>
 
-void bind_triton_block(py::module& m) {
+void bind_triton_fir_filter_ff(py::module& m) {
 
-    using triton_block = ::gr::torchdsp::triton_block;
+    using triton_fir_filter_ff = gr::torchdsp::triton_fir_filter_ff;
 
 
     py::class_<
-        triton_block,
-        gr::sync_block,
+        triton_fir_filter_ff,
+        gr::sync_decimator,
         gr::block,
         gr::basic_block,
-        std::shared_ptr<triton_block>>(m, "triton_block", D(triton_block))
+        std::shared_ptr<triton_fir_filter_ff>>(
+        m, "triton_fir_filter_ff", D(triton_fir_filter_ff))
 
         .def(
-            py::init(&triton_block::make),
+            py::init(&triton_fir_filter_ff::make),
             py::arg("model_name"),
-            py::arg("max_batch_size"),
-            py::arg("triton_url") = "localhost:8000",
-            py::arg("input_sizes") = py::array_t<int>(),
-            py::arg("output_sizes") = py::array_t<int>(),
-            D(triton_block, make))
+            py::arg("triton_url"),
+            py::arg("tap_size"),
+            D(triton_fir_filter_ff, make))
 
 
         ;

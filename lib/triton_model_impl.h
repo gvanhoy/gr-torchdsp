@@ -42,6 +42,8 @@ private:
     std::vector<std::shared_ptr<tc::InferRequestedOutput>> output_ptrs_;
     std::vector<io_memory_t> inputs_;
     std::vector<io_memory_t> outputs_;
+    std::vector<std::string> registered_input_names_;
+    std::vector<std::string> registered_output_names_;
     tc::InferResult* results_ = nullptr;
     tc::InferOptions options_;
     size_t max_batch_size_;

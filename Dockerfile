@@ -1,9 +1,11 @@
-FROM nvcr.io/nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04
+FROM ubuntu:20.04
+
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
-    build-essential \
-    unzip \    
     wget \
+    build-essential \
+    software-properties-common \
+    unzip \    
     libusb-1.0.0-dev \
     git \
     cmake \
@@ -20,20 +22,23 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -yq \
     libsndfile1-dev \
     python3-gi-cairo \
     gobject-introspection \
-    libgmp3-dev \ 
+    libgmp3-dev \
+    libspdlog-dev \
+    rapidjson-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
     gir1.2-gtk-3.0 && \
-    pip3 install mako pybind11[global] click click-plugins pgi scipy numpy zmq pyyaml sphinx && \
+    pip3 install mako pybind11[global] click click-plugins pgi scipy numpy zmq pyyaml sphinx jsonschema && \
     rm -rf /var/lib/apt/lists/*
-
 
 # Install UHD
 RUN mkdir /build && \
     cd /build && \
-    git clone --depth 1 --branch v4.0.0.0 --recursive https://github.com/EttusResearch/uhd.git && \
+    git clone --depth 1 --branch v4.2.0.1 --recursive https://github.com/EttusResearch/uhd.git && \
     mkdir -p /build/uhd/host/build && \
     cd /build/uhd/host/build && \
     cmake -DCMAKE_BUILD_TYPE=Release ../ && \
-    make -j$(nproc) && \
+    make -j12  && \
     make install && \
     ldconfig && \
     # uhd_images_downloader && \
@@ -41,32 +46,49 @@ RUN mkdir /build && \
 
 # Install Volk
 RUN cd /build && \
-    git clone --depth 1 --branch v2.4.1 --recursive https://github.com/gnuradio/volk.git && \
+    git clone --depth 1 --branch v2.5.1 --recursive https://github.com/gnuradio/volk.git && \
     mkdir -p volk/build && \
     cd volk/build && \
     cmake -DCMAKE_BUILD_TYPE=Release ../ && \
-    make -j$(nproc) && \
+    make -j12 && \
     make install && \
     ldconfig && \
     cd
 
-# Install GNU Radio 3.9
+# Install GNU Radio 3.10
 RUN cd /build && \
-    git clone --depth 1 --branch v3.9.1.0 --recursive https://github.com/gnuradio/gnuradio.git && \
+    git clone --depth 1 --branch maint-3.10 --recursive https://github.com/gnuradio/gnuradio.git && \
     mkdir /build/gnuradio/build && \
     cd /build/gnuradio/build && \
     cmake -DENABLE_DOXYGEN=False -DENABLE_MANPAGES=False -DENABLE_GR_QTGUI=False -DCMAKE_BUILD_TYPE=Release ../ && \
-    make -j$(nproc) && \
+    make -j12 && \
     make install && \
     cd
 
-# Install libtorch
-RUN wget https://download.pytorch.org/libtorch/cu111/libtorch-cxx11-abi-shared-with-deps-1.8.1%2Bcu111.zip && \
-    unzip libtorch-cxx11-abi-shared-with-deps-1.8.1+cu111.zip -d / && \
-    cp -r /libtorch/* /usr/local && \
-    rm -rf /libtorch && \
-    ldconfig
+# Install latest cmake
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null && \
+    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null && \
+    apt-get update && \
+    rm /usr/share/keyrings/kitware-archive-keyring.gpg && \
+    apt-get install -yq kitware-archive-keyring cmake
 
-ENV PYTHONPATH="/usr/local/lib/python3/site-packages:/usr/local/lib/python3/dist-packages:/usr/local/lib/python3.8/site-packages:/usr/local/lib/python3.8/dist-packages:/usr/local/lib64/python3/site-packages:/usr/local/lib64/python3/dist-packages:/usr/local/lib64/python3.8/site-packages:/usr/local/lib64/python3.8/dist-packages:$PYTHONPATH"
+# Install TIS Common
+RUN cd /build && \
+    git clone --depth 1 https://github.com/triton-inference-server/common.git && \
+    mkdir /build/common/build && \
+    cd /build/common/build && \
+    cmake -DCMAKE_BUILD_TYPE=Release ../ && \
+    make -j12 && \
+    make install && \
+    cd
+
+# Install TIS Client
+RUN cd /build && \
+    git clone --depth 1 https://github.com/triton-inference-server/client.git && \
+    mkdir /build/client/build && \
+    cd /build/client/build && \
+    cmake -DTRITON_ENABLE_CC_HTTP=ON -DTRITON_ENABLE_PYTHON_HTTP=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local ../ && \
+    make -j12 && \
+    cd
 
 WORKDIR /workspace/code

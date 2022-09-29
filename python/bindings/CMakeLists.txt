@@ -28,14 +28,10 @@ include(GrPybind)
 # Python Bindings
 # #######################################################################
 list(APPEND torchdsp_python_files
-    torch_fir_filter_ccc_python.cc
-    torch_add_cc_python.cc
-    torch_multiply_const_vcvc_python.cc
-    torch_fft_vcc_python.cc
-    torch_script_infer_classify_vcvi_python.cc
-    torch_min_max_normalize_vcvc_python.cc
     triton_block_python.cc
-    triton_model_python.cc python_bindings.cc)
+    triton_model_python.cc 
+    triton_fir_filter_ff_python.cc
+    python_bindings.cc)
 
 GR_PYBIND_MAKE_OOT(torchdsp
     ../..
