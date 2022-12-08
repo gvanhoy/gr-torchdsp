@@ -49,6 +49,11 @@ triton_block_impl::triton_block_impl(
       model_(std::move(model)) // this is invoked after calling sync_block constructor.
 {
 
+    // std::cout << "Setting output multiple to: "
+    //           << 4 * model_.get()->get_output_sizes()[0] /
+    //                  model_.get()->get_output_signature()[0]
+    //           << std::endl;
+
     set_output_multiple(
         model_.get()->get_output_sizes()[0] / model_.get()->get_output_signature()[0]);
 
@@ -64,6 +69,17 @@ int triton_block_impl::work(
     int noutput_items,
     gr_vector_const_void_star& input_items,
     gr_vector_void_star& output_items) {
+    // num_items_per_patch is fixed.
+    // When input_sizes are manually specified, this math is different.
+    // The model thinks it gets 4 byte floats, but we tell GNU Radio we want
+    // 8-byte complex.
+    auto noutput_items_per_batch =
+        model_.get()->get_output_sizes()[0] / model_.get()->get_output_signature()[0] / 2;
+
+    // std::cout << "Num output items per batch " << noutput_items_per_batch << std::endl;
+    auto batch_size = noutput_items / noutput_items_per_batch;
+    // std::cout << "Batch size: " << batch_size << std::endl;
+    // std::cout << "Num requested items: " << noutput_items << std::endl;
 
     std::vector<const char*> in_ptrs;
     for (const auto& item : input_items)
@@ -72,11 +88,6 @@ int triton_block_impl::work(
     std::vector<char*> out_ptrs;
     for (const auto& item : output_items)
         out_ptrs.push_back(static_cast<char*>(item));
-
-    // num_items_per_patch is fixed.
-    auto num_items_per_batch =
-        model_.get()->get_output_sizes()[0] / model_.get()->get_output_signature()[0];
-    auto batch_size = noutput_items / num_items_per_batch;
 
     model_->infer_batch(in_ptrs, out_ptrs, batch_size);
 

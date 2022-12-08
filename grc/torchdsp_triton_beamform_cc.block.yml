@@ -4,7 +4,7 @@ category: '[torchdsp]'
 
 templates:
   imports: import torchdsp
-  make: torchdsp.triton_block("${"beamform_cc_cpu_openvino" if device == 'cpu' else "beamform_cc_gpu"}", ${max_batch_size}, ${triton_url}, [8, 8, 8, 8], [8])
+  make: torchdsp.triton_block("${"beamform_cc_cpu_openvino" if device == 'cpu' else "beamform_cc_gpu"}", ${max_batch_size}, ${triton_url}, [32000, 32], [8])
 
 parameters:
 - id: triton_url
@@ -25,15 +25,11 @@ inputs:
 - label: in0
   domain: stream
   dtype: complex
-- label: in1
+  vlen: 4000
+- label: weights
   domain: stream
   dtype: complex
-- label: in2
-  domain: stream
-  dtype: complex
-- label: in3
-  domain: stream
-  dtype: complex
+  vlen: 4
 
 outputs:
 - label: out

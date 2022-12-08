@@ -264,6 +264,8 @@ triton_model_impl::io_memory_t triton_model_impl::allocate_shm(
     size_t num_bytes =
         num_elements(io_meta.shape) * itemsize(io_meta.datatype) * max_batch_size;
 
+    std::cout << "Allocated " << num_bytes / max_batch_size << " bytes" << std::endl;
+
     tc::Error error = tc::CreateSharedMemoryRegion(shm_key, num_bytes, &shm_fd_ip);
     tc::MapSharedMemory(shm_fd_ip, 0, num_bytes, (void**)&data_ptr);
     tc::CloseSharedMemory(shm_fd_ip);
@@ -387,11 +389,15 @@ void triton_model_impl::infer_batch(
     size_t batch_size) {
 
 
-    for (uint16_t idx = 0; idx < in_buffers.size(); idx++)
+    for (uint16_t idx = 0; idx < in_buffers.size(); idx++) {
+        // std::cout << "Copying " << inputs_[idx].element_byte_size * batch_size / 8
+        //           << " complex floats";
+        // std::cout << "for idx " << idx << std::endl;
         std::memcpy(
             inputs_[idx].data_ptr,
             in_buffers[idx],
             inputs_[idx].element_byte_size * batch_size);
+    }
 
     // std::cout << "First buffer "
     //           << static_cast<const float*>(static_cast<const void*>(in_buffers[1]))[0]
@@ -407,8 +413,14 @@ void triton_model_impl::infer_batch(
             new_shape.push_back(dim);
         new_shape[0] = batch_size; // We just override the first dimension.
         input_ptr->SetShape(new_shape);
+
+        // std::cout << "Submitting shape ";
+        // for (const auto& dim : new_shape)
+        //     std::cout << dim << ", ";
+        // std::cout << std::endl;
         inputs.push_back(input_ptr.get());
     }
+
 
     std::vector<const tc::InferRequestedOutput*> outputs;
     for (const auto& output_ptr : output_ptrs_) {
@@ -427,11 +439,15 @@ void triton_model_impl::infer_batch(
     //                  static_cast<const void*>(outputs_[0].data_ptr))[500]
     //           << std::endl;
     // it'd be great if we can avoid this, but really may not be necessary to avoid
-    for (uint16_t idx = 0; idx < out_buffers.size(); idx++)
+    for (uint16_t idx = 0; idx < out_buffers.size(); idx++) {
+        // std::cout << "Copying " << outputs_[idx].element_byte_size * batch_size / 8
+        //           << " complex floats in the output";
+        // std::cout << "for idx " << idx << std::endl;
         std::memcpy(
             out_buffers[idx],
             outputs_[idx].data_ptr,
             outputs_[idx].element_byte_size * batch_size);
+    }
 }
 
 } // namespace torchdsp

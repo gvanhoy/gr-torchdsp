@@ -137,7 +137,7 @@ def main():
         device=torch.device("cuda:0"),
         calibrate=False,
     )
-    deploy("kv260_arch.json")
+    deploy("u50_arch.json")
 
 
 if __name__ == "__main__":

@@ -1,33 +1,23 @@
 name: "beamform_cc_cpu_openvino"
-backend: "pytorch"
+backend: "onnxruntime"
 max_batch_size: 4096
 input [
   {
     name: "input__0"
     data_type: TYPE_FP32
-    dims: [ 2000, 1 ]
+    dims: [ 1000, 8 ]
   },
   {
     name: "input__1"
     data_type: TYPE_FP32
-    dims: [ 2000, 1 ]
-  },
-  {
-    name: "input__2"
-    data_type: TYPE_FP32
-    dims: [ 2000, 1 ]
-  },
-  {
-    name: "input__3"
-    data_type: TYPE_FP32
-    dims: [ 2000, 1 ]
+    dims: [ 8, 1 ]
   }
 ]
 output [
   {
     name: "output__0"
     data_type: TYPE_FP32
-    dims: [ 1, 1000 ]
+    dims: [ 1000, 2 ]
   }
 ]
 
@@ -39,7 +29,6 @@ optimization { execution_accelerators {
     name : "openvino"
   }]
 }}
-
 
 instance_group [
 	{
